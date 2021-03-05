@@ -1,7 +1,8 @@
 Write-Host "----------------------------------------------------------"
 Write-Host "$(Get-Date) - Start prepare script in location '$($PSScriptRoot)'"
 Write-Host "----------------------------------------------------------"
-
+$allargs = $args
+Write-Host "Args: $($args)"
 function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String] $folderName) {
     $scriptFullName = "$($folderName)\$($scriptName)"
 
@@ -19,7 +20,7 @@ function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String]
     Write-Host "$(Get-Date) - successfully saved to '$($scriptFullName)'"
 
     Write-Host "$(Get-Date) - start powershell with command: 'powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file $($scriptFullName)'"
-    powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file "$($scriptFullName)" @args
+    powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file "$($scriptFullName)" $allargs
     Write-Host "$(Get-Date) - executed"
 }
 
