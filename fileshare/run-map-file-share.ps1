@@ -26,5 +26,5 @@ function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String]
 
 DownloadAndSaveScript "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/fileshare/map-file-share.ps1" `
     "map-file-share.ps1" `
-    "Y:\customScripts"
+    "D:\customScripts"
 
