@@ -23,7 +23,7 @@ function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String]
     Write-Host "$(Get-Date) - executed"
 }
 
-DownloadAndSaveScript "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/hello-vmss.ps1" `
+DownloadAndSaveScript "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/hello/hello-vmss.ps1" `
     "hello-vmss.ps1" `
     "y:\customScripts"
 
