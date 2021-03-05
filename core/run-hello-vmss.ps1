@@ -23,7 +23,7 @@ function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String]
     Write-Host "executed"
 }
 
-DownloadAndSaveScript "https://raw.githubusercontent.com/Azure-Samples/compute-automation-configurations/master/prepare_vm_disks.ps1" `
-    "prepare_vm_disks.ps1" `
-    "d:\customScripts"
+DownloadAndSaveScript "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/hello-vmss.ps1" `
+    "hello-vmss.ps1" `
+    "y:\customScripts"
 
