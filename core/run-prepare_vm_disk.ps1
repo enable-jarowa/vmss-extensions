@@ -18,8 +18,8 @@ function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String]
     (Invoke-WebRequest -UseBasicParsing -Uri "$($scriptUrl)").Content | Out-File -FilePath "$($scriptFullName)"
     Write-Host "$(Get-Date) - successfully saved to '$($scriptFullName)'"
 
-    Write-Host "$(Get-Date) - start powershell with command: 'powershell.exe -ExecutionPolicy Unrestricted -windowstyle hidden -noninteractive -nologo -file $($scriptFullName)'"
-    powershell.exe -ExecutionPolicy Unrestricted -windowstyle hidden -noninteractive -nologo -file "$($scriptFullName)"
+    Write-Host "$(Get-Date) - start powershell with command: 'powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file $($scriptFullName)'"
+    powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file "$($scriptFullName)"
     Write-Host "$(Get-Date) - executed"
 }
 

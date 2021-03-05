@@ -1,1 +1,1 @@
-powershell.exe $PSScriptRoot\run-hello-vmss.ps1 >> Y:\run-hello-vmss.log
+powershell.exe $PSScriptRoot\run-hello-vmss.ps1 @args >> Y:\run-hello-vmss.log
