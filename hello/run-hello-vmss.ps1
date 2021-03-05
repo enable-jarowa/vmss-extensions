@@ -2,7 +2,7 @@ Write-Host "----------------------------------------------------------"
 Write-Host "$(Get-Date) - Start prepare script in location '$($PSScriptRoot)'"
 Write-Host "----------------------------------------------------------"
 $allargs = $args
-Write-Host "Args: $($args)"
+
 function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String] $folderName) {
     $scriptFullName = "$($folderName)\$($scriptName)"
 

@@ -1,1 +1,1 @@
-powershell.exe $PSScriptRoot\run-prepare_vm_disk.ps1 >> d:\run-prepare_vm_disk.log
+powershell.exe $PSScriptRoot\map-file-share.ps1 >> d:\map-file-share.log
