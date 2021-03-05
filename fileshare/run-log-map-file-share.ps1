@@ -1,1 +1,1 @@
-powershell.exe $PSScriptRoot\map-file-share.ps1 >> d:\map-file-share.log
+powershell.exe $PSScriptRoot\map-file-share.ps1 @args >> Y:\map-file-share.log
