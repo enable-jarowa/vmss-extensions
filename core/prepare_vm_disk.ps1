@@ -35,7 +35,7 @@ for($index = 2; $index -lt $disks.Count; $index++) {
             New-Partition -UseMaximumSize -DriveLetter $driveLetter | 
             Format-Volume -FileSystem NTFS -NewFileSystemLabel "$label.$count" -Confirm:$false -Force
     } else {
-        $disks[$index] | Get-Partition | Set-Partition -NewDriveLetter $driveLetter
+        $disks[$index] | Get-Partition | Set-Partition -NewDriveLetter $driveLetter -ea Ignore
     }
     $count++
 }
