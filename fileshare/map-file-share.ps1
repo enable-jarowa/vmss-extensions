@@ -11,7 +11,7 @@ if ($connectTestResult.TcpTestSucceeded) {
     # Save the password so the drive will persist on reboot
     cmd.exe /C "cmdkey /add:`"$($f_url)`" /user:`"Azure\$($f_account)`" /pass:`"$($f_key)`""
     # Mount the drive
-    New-PSDrive -Name "$($f_drive)" -PSProvider FileSystem -Root "\\$($f_url)\$($f_folder)" -Persist
+    New-PSDrive -Name "$($f_drive)" -PSProvider FileSystem -Root "\\$($f_url)\$($f_folder)" -Persist -ErrorAction Ignore
 } else {
     Write-Error -Message "Unable to reach the Azure storage account via port 445. Check to make sure your organization or ISP is not blocking port 445, or use Azure P2S VPN, Azure S2S VPN, or Express Route to tunnel SMB traffic over a different port."
 }
