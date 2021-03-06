@@ -19,12 +19,12 @@ function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String]
     (Invoke-WebRequest -UseBasicParsing -Uri "$($scriptUrl)").Content | Out-File -FilePath "$($scriptFullName)" -Force
     Write-Host "$(Get-Date) - successfully saved to '$($scriptFullName)'"
 
-    Write-Host "$(Get-Date) - start powershell with command: 'powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file $($scriptFullName)' - $($allargs.Count) args"
-    powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file "$($scriptFullName)" $allargs
+    Write-Host "$(Get-Date) - start powershell with command: 'powershell.exe -ExecutionPolicy Unrestricted -file $($scriptFullName)' - $($allargs.Count) args"
+    powershell.exe -ExecutionPolicy Unrestricted -file "$($scriptFullName)" $allargs
     Write-Host "$(Get-Date) - executed"
 }
 
-DownloadAndSaveScript "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/prepare_vm_disk.ps1" `
-    "prepare_vm_disk.ps1" `
-    "d:\customScripts"
+DownloadAndSaveScript "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/fileshare/map-file-share.ps1" `
+    "map-file-share.ps1" `
+    "D:\customScripts"
 
