@@ -16,7 +16,7 @@ function DownloadAndSaveScript([String]$scriptUrl, [String]$scriptName, [String]
     Write-Host "$(Get-Date) - changed to folder : $($folderName)"
 
     Write-Host "$(Get-Date) - start downloading from '$($scriptUrl)'"
-    (Invoke-WebRequest -UseBasicParsing -Uri "$($scriptUrl)").Content | Out-File -FilePath "$($scriptFullName)"
+    (Invoke-WebRequest -UseBasicParsing -Uri "$($scriptUrl)").Content | Out-File -FilePath "$($scriptFullName)" -Force
     Write-Host "$(Get-Date) - successfully saved to '$($scriptFullName)'"
 
     Write-Host "$(Get-Date) - start powershell with command: 'powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file $($scriptFullName)' - $($allargs.Count) args"
