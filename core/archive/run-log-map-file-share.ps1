@@ -1,1 +1,0 @@
-powershell.exe $PSScriptRoot\run-map-file-share.ps1 @args >> D:\map-file-share.log
