@@ -1,1 +1,0 @@
-powershell.exe $PSScriptRoot\run-prepare_vm_disk.ps1 @args >> d:\run-prepare_vm_disk.log
