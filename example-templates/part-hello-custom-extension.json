@@ -1,0 +1,21 @@
+{
+    "extensions": [
+        {
+            "name": "customScriptAttachDisksFirst",
+            "properties": {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.8",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/hello/run-log-hello.ps1"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file run-log-hello.ps1"
+                }
+            }
+        }
+    ]
+}

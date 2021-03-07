@@ -62,11 +62,13 @@ start the powershell with additional options to suppress any interactive element
 
 - dont use any path to call. Microsoft will start the powershell within the extension folder where all files are downloaded.
 - The files are downloaded in this folder: "C:\Packages\Plugins\Microsoft.Compute.CustomScriptExtension\1.10.9\Downloads\1"
-
+![image](images/installed-extensions.png)
 
 - the Extension log files are in this folder: "C:\WindowsAzure\Logs\Plugins\Microsoft.Compute.CustomScriptExtension\1.10.9"
-- your custom logs are in "C:\Windows\Temp".
+![image](images/extension-log-files.png)
 
+- your custom logs are in "C:\Windows\Temp".
+![image](images/custom-log-files.png)
 
 
 

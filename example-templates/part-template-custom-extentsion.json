@@ -1,0 +1,23 @@
+{
+    "extensions": [
+        {
+            "name": "customScriptAttachDisksFirst",
+            "properties": {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.8",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/run-log-prepare-sf.ps1",
+                        "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/prepare-vm-disk.ps1",
+                        "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/map-file-share.ps1"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file run-log-prepare-sf.ps1  \"', parameters('fileShare.urlToMap'), '\" \"', parameters('fileShare.shareName'), '\\', parameters('fileShare.folderName'), '\" \"', parameters('fileShare.driveToMap'), '\" \"', parameters('fileShare.accountName'), '\" \"', parameters('fileShare.key'), '\"')]"
+                }
+            }
+        }
+    ]
+}

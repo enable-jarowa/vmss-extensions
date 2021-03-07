@@ -1,0 +1,37 @@
+{
+    "extensions": [
+        {
+            "name": "[concat(parameters('vmNodeType0Name'),'_ServiceFabricNode')]",
+            "properties": {
+                "provisionAfterExtensions": [
+                    "customScriptAttachDisksFirst"
+                ],
+                "type": "ServiceFabricNode",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "StorageAccountKey1": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key1]",
+                    "StorageAccountKey2": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key2]"
+                },
+                "publisher": "Microsoft.Azure.ServiceFabric",
+                "settings": {
+                    "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
+                    "nodeTypeRef": "[parameters('vmNodeType0Name')]",
+                    "dataPath": "S:\\\\SvcFab",
+                    "durabilityLevel": "Silver",
+                    "enableParallelJobs": true,
+                    "nicPrefixOverride": "[parameters('subnet0Prefix')]",
+                    "reverseProxyCertificate": {
+                        "thumbprint": "[parameters('reverseProxyCertificateThumbprint')]",
+                        "x509StoreName": "[parameters('reverseProxyCertificateStoreValue')]"
+                    },
+                    "certificate": {
+                        "thumbprint": "[parameters('certificateThumbprint')]",
+                        "thumbprintSecondary": "[parameters('secondaryCertificateThumbprint')]",
+                        "x509StoreName": "[parameters('certificateStoreValue')]"
+                    }
+                },
+                "typeHandlerVersion": "1.1"
+            }
+        }
+    ]
+}
