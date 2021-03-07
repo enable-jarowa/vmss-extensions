@@ -32,11 +32,11 @@ for convenience of the example we are using here public github content. Better s
 see Microsoft configuration solution for using storage accounts: [Link](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-windows#additional-examples)
 
 ```json
-                "fileUris": [
-                    "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/run-log-prepare-sf.ps1",
-                    "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/prepare-vm-disk.ps1",
-                    "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/map-file-share.ps1"
-                ]
+  "fileUris": [
+      "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/run-log-prepare-sf.ps1",
+      "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/prepare-vm-disk.ps1",
+      "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/map-file-share.ps1"
+  ]
 ```
 
 - we are using "run-log-prepare-sf.ps1" as the mail script to call the other powershell script and even writing a custom log file into the %TEMP% folder for debugging.
@@ -48,33 +48,49 @@ see Microsoft configuration solution for using storage accounts: [Link](https://
 
 if you dont use any secrets to be passed you can just put the command like this
 
+start the powershell with additional options to suppress any interactive elements
+
+```powershell
+  powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo 
+```
+
 ```json
   "protectedSettings": {
     "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file run-log-prepare-sf.ps1"
   }
 ```
 
+- dont use any path to call. Microsoft will start the powershell within the extension folder where all files are downloaded.
+- The files are downloaded in this folder: "C:\Packages\Plugins\Microsoft.Compute.CustomScriptExtension\1.10.9\Downloads\1"
+
+
+- the Extension log files are in this folder: "C:\WindowsAzure\Logs\Plugins\Microsoft.Compute.CustomScriptExtension\1.10.9"
+- your custom logs are in "C:\Windows\Temp".
+
+
+
+
 
 ```json
-    {
-        "name": "customScriptAttachDisksFirst",
-        "properties": {
-            "publisher": "Microsoft.Compute",
-            "type": "CustomScriptExtension",
-            "typeHandlerVersion": "1.8",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-                "fileUris": [
-                    "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/run-log-prepare-sf.ps1",
-                    "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/prepare-vm-disk.ps1",
-                    "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/map-file-share.ps1"
-                ]
-            },
-            "protectedSettings": {
-                "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file run-log-prepare-sf.ps1  \"', parameters('fileShare.urlToMap'), '\" \"', parameters('fileShare.shareName'), '\\', parameters('fileShare.folderName'), '\" \"', parameters('fileShare.driveToMap'), '\" \"', parameters('fileShare.accountName'), '\" \"', parameters('fileShare.key'), '\"')]"
-            }
-        }
-    },
+  {
+      "name": "customScriptAttachDisksFirst",
+      "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "CustomScriptExtension",
+          "typeHandlerVersion": "1.8",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+              "fileUris": [
+                  "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/run-log-prepare-sf.ps1",
+                  "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/prepare-vm-disk.ps1",
+                  "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/map-file-share.ps1"
+              ]
+          },
+          "protectedSettings": {
+              "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -file run-log-prepare-sf.ps1  \"', parameters('fileShare.urlToMap'), '\" \"', parameters('fileShare.shareName'), '\\', parameters('fileShare.folderName'), '\" \"', parameters('fileShare.driveToMap'), '\" \"', parameters('fileShare.accountName'), '\" \"', parameters('fileShare.key'), '\"')]"
+          }
+      }
+  },
 ```
 
 ## Configure dependency within Service Fabric
