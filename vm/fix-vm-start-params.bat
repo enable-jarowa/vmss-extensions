@@ -13,7 +13,7 @@ regedit /s %D%tcp-timed-wait-delay.reg
 
 date /T >> %D%set-netsh-log.txt
 time /T >> %D%set-netsh-log.txt
-echo "netsh set to 10000" >> %D%set-netsh-log.txt
+echo "netsh set to 64511" >> %D%set-netsh-log.txt
 netsh int ipv4 show dynamicport tcp >> %D%set-netsh-log.txt
 echo "===================================================" >> %D%set-netsh-log.txt
 
