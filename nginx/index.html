@@ -10,13 +10,18 @@
             }
             .title {
                 position: absolute;
-                top: calc(50vh + 40px);
+                top: calc(50vh - 78px);
                 right: calc(42vw - 100px);
                 background-color: rgba(255, 255, 255, 0.5);
             }
             h1 {
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 4em;
+            }
+            @media only screen and (max-width:1000px) {
+                .title {
+                    top: calc(50vh + 40px);
+                }
             }
         </style>
     </head>
