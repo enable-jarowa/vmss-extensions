@@ -8,6 +8,7 @@ $f_folder = $args[1]
 $f_drive = $args[2]
 $f_account = $args[3]
 $f_key= $args[4]
+$f_features=$args[5]
 
 $connectTestResult = Test-NetConnection -ComputerName "$($f_url)" -Port 445
 if ($connectTestResult.TcpTestSucceeded) {
