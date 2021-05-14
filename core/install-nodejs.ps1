@@ -1,5 +1,5 @@
 Write-Output "------------------------------------------"
-Write-Output "Custom script: install-node.ps1"
+Write-Output "Custom script: install-nodejs.ps1"
 Write-Output "------------------------------------------"
 Write-Output "$($args.Count) received"
 Write-Output "------------------------------------------"
@@ -9,8 +9,9 @@ $f_drive = $args[2]
 $f_account = $args[3]
 $f_key= $args[4]
 $f_features=$args[5]
+$f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
-if ($f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" }).Contains("nodejs10")) {
+if ($f_featurearray.Contains("nodejs10")) {
     $msi = "node-v10.24.1-x64.msi"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
     if (!(Test-Path $fileDownloaded -PathType leaf)) {
