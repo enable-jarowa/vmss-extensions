@@ -19,7 +19,7 @@ if ($f_featurearray.Contains("nodejs10")) {
             -Uri "https://nodejs.org/download/release/v10.24.1/$($msi)" `
             -OutFile $fileDownloaded
     }
-    Install-Package "$($fileDownloaded)" -Force
+    Install-Package "$($fileDownloaded)" -Force -EA Ignore
 
     $newPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
     if (!$newPath.Contains("nodejs")) {

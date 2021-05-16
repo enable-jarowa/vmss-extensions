@@ -12,6 +12,8 @@ $f_features=$args[5]
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("sfsdk")) {
+     Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force -Scope CurrentUser 
+
     $msi = "WebPlatformInstaller_x64_en-US.msi"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
     if (!(Test-Path $fileDownloaded -PathType leaf)) {
