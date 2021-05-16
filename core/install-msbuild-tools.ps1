@@ -1,4 +1,4 @@
-Write-Output "------------------------------------------"
+ Write-Output "------------------------------------------"
 Write-Output "Custom script: install-dotnet-sdk.ps1"
 Write-Output "------------------------------------------"
 Write-Output "$($args.Count) received"
@@ -19,7 +19,8 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 ## install silently
 if ($f_featurearray.Contains("msbuildtools")) {
 
-    $installedTools=((gp HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -Match "Visual Studio Build Tools").Count
+    #$installedTools=((gp HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -Match "Visual Studio Build Tools").Count
+    $installedTools=0
 
     if ($installedTools -eq 0) { 
         $msi = "vs_BuildTools.exe"
@@ -31,19 +32,20 @@ if ($f_featurearray.Contains("msbuildtools")) {
         }
 
         $location="$($env:temp)\vs_BuildTools"
-        Remove-Item -path "$($location)\*" -include Layout.json -Force -ErrorAction SilentlyContinue
+        $installationDoneFile="vs_installer.version.json"
+        Remove-Item -path "$($location)\*" -include $installationDoneFile -Force -ErrorAction SilentlyContinue
 
-        & "$($env:temp)\vs_BuildTools.exe" --layout "$($location)" --lang En-us --add Microsoft.VisualStudio.Workload.MSBuildTools --includeRecommended --quiet --wait --norestart
+        & "$($env:temp)\vs_BuildTools.exe" --layout "$($location)" --lang En-us --add Microsoft.VisualStudio.Workload.MSBuildTools Microsoft.VisualStudio.Workload.NetCoreBuildTools Microsoft.VisualStudio.Workload.AzureBuildTools --includeRecommended --quiet --wait --norestart
 
-        $fileToCheck="$($location)\Layout.json"
+        $fileToCheck="$($location)\$($installationDoneFile)"
         do{
-            Write-Host "Wait 10s - for Layout.json"
+            Write-Host "Wait 10s - for $($installationDoneFile)"
             Start-Sleep 10
         }
         until (Test-Path $fileToCheck -PathType leaf)
 
         ## this process runs async - we need to check for Layout
-        & "$($location)\vs_setup.exe" --nocache --wait --noUpdateInstaller --noWeb --add Microsoft.VisualStudio.Workload.MSBuildTools --includeRecommended --quiet --norestart
+        & "$($location)\vs_setup.exe" --nocache --wait --noUpdateInstaller --noWeb --add Microsoft.VisualStudio.Workload.MSBuildTools Microsoft.VisualStudio.Workload.NetCoreBuildTools Microsoft.VisualStudio.Workload.AzureBuildTools --includeRecommended --quiet --norestart
     } else {
         Write-Host "Visual Studio Build Tools already installed"
     }
@@ -56,3 +58,4 @@ Write-Output "------------------------------------------"
 Write-Output "done"
 Write-Output "------------------------------------------"
 $True
+ 
