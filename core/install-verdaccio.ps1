@@ -61,8 +61,6 @@ if ($f_featurearray.Contains("verdaccio")) {
 
     C:\verdaccio\node\current\npm.cmd set registry http://localhost:4873/
 
-    cd -
-
 }
 
 Write-Output "------------------------------------------"
