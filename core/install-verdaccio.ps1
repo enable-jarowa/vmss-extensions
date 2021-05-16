@@ -42,7 +42,7 @@ if ($f_featurearray.Contains("verdaccio")) {
     }
     cd c:\verdaccio\app
     C:\verdaccio\node\current\npm.cmd set registry https://registry.npmjs.org/
-    C:\verdaccio\node\current\npm.cmd install verdaccio
+    C:\verdaccio\node\current\npm.cmd install verdaccio -s
 
     $msi = "verdaccio-winsw.exe"
     $fileDownloaded = "c:\verdaccio\app\$($msi)"
