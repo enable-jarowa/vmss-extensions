@@ -28,7 +28,7 @@ if ($f_featurearray.Contains("verdaccio")) {
     mkdir c:\verdaccio\app
     mkdir c:\verdaccio\node
 
-    $datadrive=S
+    $datadrive="S"
     #$datadrive="C"
     mkdir "$($datadrive):\verdaccio"
     mkdir "$($datadrive):\verdaccio\app"
