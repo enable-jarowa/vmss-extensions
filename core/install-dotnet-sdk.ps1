@@ -12,7 +12,8 @@ $f_features="$($args[5])"
 Write-Host "Features=$($f_features)"
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
-if ($f_featurearray.Contains("dotnetsdk3.1")) {
+## just install both versions all the time
+if ($f_featurearray.Contains("dotnetsdk3.1") -or $f_featurearray.Contains("dotnetsdk5.0")) {
     $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
     [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
     $channel="3.1"
@@ -31,7 +32,7 @@ if ($f_featurearray.Contains("dotnetsdk3.1")) {
 
 }
 
-if ($f_featurearray.Contains("dotnetsdk5.0")) {
+if ($f_featurearray.Contains("dotnetsdk3.1") -or $f_featurearray.Contains("dotnetsdk5.0")) {
 
     $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
     [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
