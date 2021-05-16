@@ -14,13 +14,13 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 ## https://verdaccio.org/docs/en/windows using Using WinSW
 ## https://github.com/winsw/winsw
 if ($f_featurearray.Contains("verdaccio")) {
-    $version="node-v15.14.0-win-x86"
+    $version="node-v14.17.0-win-x64"
     $msi = "$($version).zip"
 
     $fileDownloaded = "$($env:TEMP)\$($msi)"
     if (!(Test-Path $fileDownloaded -PathType leaf)) {
         Invoke-WebRequest `
-            -Uri "https://nodejs.org/download/release/v15.14.0/node-v15.14.0-win-x86.zip" `
+            -Uri "https://nodejs.org/dist/v14.17.0/node-v14.17.0-win-x64.zip" `
             -OutFile $fileDownloaded
     }
     ## create folder c:\verdaccio\node
