@@ -35,17 +35,13 @@ if ($f_featurearray.Contains("msbuildtools")) {
         $installationDoneFile="vs_installer.version.json"
         Remove-Item -path "$($location)\*" -include $installationDoneFile -Force -ErrorAction SilentlyContinue
 
-        & "$($env:temp)\vs_BuildTools.exe" --layout "$($location)" --lang En-us --add Microsoft.VisualStudio.Workload.MSBuildTools Microsoft.VisualStudio.Workload.NetCoreBuildTools Microsoft.VisualStudio.Workload.AzureBuildTools --includeRecommended --quiet --wait --norestart
+        Write-Host "Start vs_BuildTools.exe to save installations offline"
+        Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList @("--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools" ,"Microsoft.VisualStudio.Workload.NetCoreBuildTools", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--quiet", "--wait", "--norestart")
 
-        $fileToCheck="$($location)\$($installationDoneFile)"
-        do{
-            Write-Host "Wait 10s - for $($installationDoneFile)"
-            Start-Sleep 10
-        }
-        until (Test-Path $fileToCheck -PathType leaf)
-
+        Write-Host "Start vs_setup.exe to install ms build tools and friends - takes a few minutes"
         ## this process runs async - we need to check for Layout
-        & "$($location)\vs_setup.exe" --nocache --wait --noUpdateInstaller --noWeb --add Microsoft.VisualStudio.Workload.MSBuildTools Microsoft.VisualStudio.Workload.NetCoreBuildTools Microsoft.VisualStudio.Workload.AzureBuildTools --includeRecommended --quiet --norestart
+        Start-Process -Wait "$($location)\vs_setup.exe" -ArgumentList @("--nocache", "--wait", "--noUpdateInstaller", "--noWeb", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--quiet", "--norestart")
+
     } else {
         Write-Host "Visual Studio Build Tools already installed"
     }
