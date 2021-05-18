@@ -36,11 +36,13 @@ if ($f_featurearray.Contains("msbuildtools")) {
         Remove-Item -path "$($location)\*" -include $installationDoneFile -Force -ErrorAction SilentlyContinue
 
         Write-Host "Start vs_BuildTools.exe to save installations offline"
-        Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList @("--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools" ,"Microsoft.VisualStudio.Workload.NetCoreBuildTools", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--quiet", "--wait", "--norestart")
+
+       #  ,"Microsoft.VisualStudio.Workload.NetCoreBuildTools", "Microsoft.VisualStudio.Workload.AzureBuildTools",
+        Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList @("--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--includeRecommended", "--quiet", "--wait", "--norestart")
 
         Write-Host "Start vs_setup.exe to install ms build tools and friends - takes a few minutes"
         ## this process runs async - we need to check for Layout
-        Start-Process -Wait "$($location)\vs_setup.exe" -ArgumentList @("--nocache", "--wait", "--noUpdateInstaller", "--noWeb", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--quiet", "--norestart")
+        Start-Process -Wait "$($location)\vs_setup.exe" -ArgumentList @("--nocache", "--wait", "--noUpdateInstaller", "--noWeb", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--includeRecommended", "--quiet", "--norestart")
 
     } else {
         Write-Host "Visual Studio Build Tools already installed"

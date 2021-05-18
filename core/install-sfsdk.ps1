@@ -14,16 +14,14 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 if ($f_featurearray.Contains("sfsdk")) {
      Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force -Scope CurrentUser 
 
-    $msi = "WebPlatformInstaller_x64_en-US.msi"
+    $msi = "MicrosoftServiceFabricSDK.4.2.477.msi"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
     if (!(Test-Path $fileDownloaded -PathType leaf)) {
         Invoke-WebRequest `
-            -Uri "https://download.microsoft.com/download/8/4/9/849DBCF2-DFD9-49F5-9A19-9AEE5B29341A/WebPlatformInstaller_x64_en-US.msi" `
+            -Uri "https://download.microsoft.com/download/f/c/3/fc39707f-f67c-4c1b-9274-a055a3eb51b8/MicrosoftServiceFabricSDK.4.2.477.msi" `
             -OutFile $fileDownloaded -UseBasicParsing
     }
     Start-Process "msiexec" -ArgumentList '/i', "$($fileDownloaded)", '/passive', '/quiet', '/norestart', '/qn' -NoNewWindow -Wait; 
-
-    & "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" /Install /Products:MicrosoftAzure-ServiceFabric-CoreSDK /AcceptEULA
 
 }
 

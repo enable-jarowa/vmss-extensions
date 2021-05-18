@@ -13,10 +13,10 @@ Write-Host "Features=$($f_features)"
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 ## just install both versions all the time
-if ($f_featurearray.Contains("dotnetsdk3.1") -or $f_featurearray.Contains("dotnetsdk5.0")) {
+if ($f_featurearray.Contains("dotnetsdk5.0") -and $False) {
     $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
     [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
-    $channel="3.1"
+    $channel="Currrent"
     
     $location="$($env:programfiles)\dotnet"
     . $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
@@ -32,11 +32,11 @@ if ($f_featurearray.Contains("dotnetsdk3.1") -or $f_featurearray.Contains("dotne
 
 }
 
-if ($f_featurearray.Contains("dotnetsdk3.1") -or $f_featurearray.Contains("dotnetsdk5.0")) {
+if ($f_featurearray.Contains("dotnetsdk3.1") -or $f_featurearray.Contains("dotnetsdk") ) {
 
     $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
     [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
-    $channel="Current"
+    $channel="3.1"
 
     $location="$($env:programfiles)\dotnet"
     . $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
