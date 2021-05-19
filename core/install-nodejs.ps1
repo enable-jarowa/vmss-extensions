@@ -25,9 +25,9 @@ if ($f_featurearray.Contains("nodejs10")) {
     if (!$newPath.Contains("nodejs")) {
         $newPath += ";c:\program files\nodejs"
         $newPath = [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
-        Write-Host "added nodejs to path"
+        Write-Output "added nodejs to path"
     } else {
-        Write-Host "nodejs is already in path"
+        Write-Output "nodejs is already in path"
     }
 
 }

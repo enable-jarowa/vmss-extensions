@@ -9,6 +9,7 @@ $f_drive = $args[2]
 $f_account = $args[3]
 $f_key= $args[4]
 $f_features=$args[5]
+Write-Output "Features=$($f_features)"
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("sfsdk")) {
@@ -24,16 +25,17 @@ if ($f_featurearray.Contains("sfsdk")) {
     Start-Process "msiexec" -ArgumentList '/i', "$($fileDownloaded)", '/passive', '/quiet', '/norestart', '/qn' -NoNewWindow -Wait; 
 
     Start-Sleep 10
-    Write-Host "Installing /Products:ServiceFabricRuntime_7_2_CU7"
+    Write-Output "Installing /Products:ServiceFabricRuntime_7_2_CU7"
     Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList @('/Install', '/Products:ServiceFabricRuntime_7_2_CU7', '/AcceptEULA') -NoNewWindow -Wait
 
-    Write-Host "Installing /Products:ServiceFabricSDK_4_2_CU7 again"
+    Write-Output "Installing /Products:ServiceFabricSDK_4_2_CU7 again"
     Start-Sleep 10
     Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList @('/Install', '/Products:ServiceFabricSDK_4_2_CU7', '/AcceptEULA') -NoNewWindow -Wait
 
+    Write-Output "installation done"
 
 } else {
-    Write-Host "sfsdk - not installed"
+    Write-Output "sfsdk - not installed"
 }
 
 Write-Output "------------------------------------------"
