@@ -23,8 +23,17 @@ if ($f_featurearray.Contains("sfsdk")) {
     }
     Start-Process "msiexec" -ArgumentList '/i', "$($fileDownloaded)", '/passive', '/quiet', '/norestart', '/qn' -NoNewWindow -Wait; 
 
+    Start-Sleep 10
+    Write-Host "Installing /Products:ServiceFabricSDK_4_2_CU7,ServiceFabricRuntime_7_2_CU7"
     Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:ServiceFabricSDK_4_2_CU7,ServiceFabricRuntime_7_2_CU7', '/AcceptEULA' -NoNewWindow -Wait
 
+    Write-Host "Installing /Products:ServiceFabricSDK_4_2_CU7,ServiceFabricRuntime_7_2_CU7 again"
+    Start-Sleep 10
+    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:ServiceFabricSDK_4_2_CU7,ServiceFabricRuntime_7_2_CU7', '/AcceptEULA' -NoNewWindow -Wait
+
+
+} else {
+    Write-Host "sfsdk - not installed"
 }
 
 Write-Output "------------------------------------------"
