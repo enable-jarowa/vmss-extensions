@@ -38,10 +38,10 @@ if ($f_featurearray.Contains("msbuildtools")) {
         ## https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2019
         Write-Output "Start vs_BuildTools.exe to save installations offline"
 
-        Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList @("--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--includeRecommended", "--passive", "--wait", "--norestart")
+        Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList @("--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "-add", "Microsoft.VisualStudio.Workload.WebBuildTools", "--includeRecommended", "--passive", "--wait", "--norestart")
 
         Write-Output "Start vs_setup.exe to install ms build tools and friends - takes a few minutes"
-        Start-Process -Wait "$($location)\vs_setup.exe" -ArgumentList @("--nocache", "--wait", "--noUpdateInstaller", "--noWeb", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--includeRecommended", "--passive", "--norestart")
+        Start-Process -Wait "$($location)\vs_setup.exe" -ArgumentList @("--nocache", "--wait", "--noUpdateInstaller", "--noWeb", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "-add", "Microsoft.VisualStudio.Workload.WebBuildTools", "--includeRecommended", "--passive", "--norestart")
 
         Write-Output "installation done"
 
