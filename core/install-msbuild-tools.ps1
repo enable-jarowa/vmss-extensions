@@ -35,13 +35,13 @@ if ($f_featurearray.Contains("msbuildtools")) {
         $installationDoneFile="vs_installer.version.json"
         Remove-Item -path "$($location)\*" -include $installationDoneFile -Force -ErrorAction SilentlyContinue
 
+        ## https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2019
         Write-Host "Start vs_BuildTools.exe to save installations offline"
-       #  ,"Microsoft.VisualStudio.Workload.NetCoreBuildTools", "Microsoft.VisualStudio.Workload.AzureBuildTools",
-        Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList @("--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Workload.VisualStudioExtensionBuildTools", "--includeRecommended", "--passive", "--wait", "--norestart")
+
+        Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList @("--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--includeRecommended", "--quiet", "--wait", "--norestart")
 
         Write-Host "Start vs_setup.exe to install ms build tools and friends - takes a few minutes"
-        ## this process runs async - we need to check for Layout
-        Start-Process -Wait "$($location)\vs_setup.exe" -ArgumentList @("--nocache", "--wait", "--noUpdateInstaller", "--noWeb", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Workload.VisualStudioExtensionBuildTools", "--includeRecommended", "--passive", "--norestart")
+        Start-Process -Wait "$($location)\vs_setup.exe" -ArgumentList @("--nocache", "--wait", "--noUpdateInstaller", "--noWeb", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--includeRecommended", "--quiet", "--norestart")
 
     } else {
         Write-Host "Visual Studio Build Tools already installed"
