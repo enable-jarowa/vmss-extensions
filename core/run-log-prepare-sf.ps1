@@ -6,7 +6,7 @@
 ## 1. used to map a drive to a file share on storage account in azure
 ## 2. formatting all defined Disks per VM or VMSS in Azure
 ##
-. $PSScriptRoot\map-file-share.ps1 @args >> "$($env:TEMP)\map-file-share.log"
+#. $PSScriptRoot\map-file-share.ps1 @args >> "$($env:TEMP)\map-file-share.log"
 . $PSScriptRoot\prepare-vm-disk.ps1 >> "$($env:TEMP)\prepare-vm-disk.log"
 . $PSScriptRoot\install-nodejs.ps1 @args >> "$($env:TEMP)\install-nodejs.log"
 . $PSScriptRoot\install-sfsdk.ps1 @args >> "$($env:TEMP)\install-sfsdk.log"
