@@ -26,7 +26,7 @@ if ($f_featurearray.Contains("sfsdk")) {
 
     Start-Sleep 10
     Write-Output "Installing /Products:ServiceFabricRuntime_7_2_CU7"
-    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:ServiceFabricRuntime_7_2_CU7', '/AcceptEULA' -NoNewWindow -Wait
+    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:ServiceFabricSDK_4_2_CU7,ServiceFabricRuntime_7_2_CU7', '/AcceptEULA' -NoNewWindow -Wait
 
     Write-Output "Installing /Products:ServiceFabricSDK_4_2_CU7 again"
     Start-Sleep 10
