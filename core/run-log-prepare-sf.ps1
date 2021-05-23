@@ -8,8 +8,15 @@
 ##
 #. $PSScriptRoot\map-file-share.ps1 @args >> "$($env:TEMP)\map-file-share.log"
 . $PSScriptRoot\prepare-vm-disk.ps1 >> "$($env:TEMP)\prepare-vm-disk.log"
-. $PSScriptRoot\prepare-exclude-sf-defender >> "$($env:TEMP)\prepare-exclude-sf-defender.log"
-. $PSScriptRoot\prepare-sf-network.ps1 >> "$($env:TEMP)\prepare-sf-network.log"
+
+$filename = "plugins-execute";
+$psfile = "$($filename).ps1";
+$fileDownloaded = "$($env:TEMP)\$($psfile)"
+Invoke-WebRequest `
+    -Uri "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/$($psfile)" `
+    -OutFile $fileDownloaded -UseBasicParsing
+
+. $env:TEMP\$psfile >> "$($env:TEMP)\$($filename).log"
 . $PSScriptRoot\install-nodejs.ps1 @args >> "$($env:TEMP)\install-nodejs.log"
 . $PSScriptRoot\install-sfsdk.ps1 @args >> "$($env:TEMP)\install-sfsdk.log"
 . $PSScriptRoot\install-dotnet-sdk.ps1 @args >> "$($env:TEMP)\install-dotnet-sdk.log"
