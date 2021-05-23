@@ -3,6 +3,7 @@ Write-Output "Custom script: plugins-execute.ps1"
 Write-Output "------------------------------------------"
 
 $filenames = @(
+    "plugin-sf-SDK",
     "plugin-sf-network",
     "plugin-exclude-sf-defender"
 )
