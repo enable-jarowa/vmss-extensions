@@ -9,14 +9,14 @@
 #. $PSScriptRoot\map-file-share.ps1 @args *>> "$($env:TEMP)\map-file-share.log"
 . $PSScriptRoot\prepare-vm-disk.ps1 *>> "$($env:TEMP)\prepare-vm-disk.log"
 
-$filename = "plugins-execute";
-$psfile = "$($filename).ps1";
-$fileDownloaded = "$($env:TEMP)\$($psfile)"
+$filenamePlugin = "plugins-execute";
+$psfilePlugin = "$($filenamePlugin).ps1";
+$fileDownloadedPlugin = "$($env:TEMP)\$($psfilePlugin)"
 Invoke-WebRequest `
     -Uri "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/$($psfile)" `
-    -OutFile $fileDownloaded -UseBasicParsing
+    -OutFile $fileDownloadedPlugin -UseBasicParsing
 
-. $env:TEMP\$psfile *>> "$($env:TEMP)\$($filename).log"
+. $env:TEMP\$psfilePlugin *>> "$($env:TEMP)\$($filenamePlugin).log"
 . $PSScriptRoot\install-nodejs.ps1 @args *>> "$($env:TEMP)\install-nodejs.log"
 . $PSScriptRoot\install-sfsdk.ps1 @args *>> "$($env:TEMP)\install-sfsdk.log"
 . $PSScriptRoot\install-dotnet-sdk.ps1 @args *>> "$($env:TEMP)\install-dotnet-sdk.log"
