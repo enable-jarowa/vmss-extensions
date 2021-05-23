@@ -4,7 +4,13 @@ Write-Output "------------------------------------------"
 
 $allExclPaths = (Get-MpPreference).ExclusionPath
 
-$exclPaths = @("S:\", "D:\", "C:\Program Files\Microsoft Service Fabric")
+$exclPaths = @(
+    "c:\agent", 
+    "c:\a", #build folder
+    "S:\", 
+    "D:\", 
+    "C:\Program Files\Microsoft Service Fabric"
+)
 
 for ($i=0; $i -lt $exclPaths.Count; $i++) {
     $exclPath = $exclPaths[$i]
