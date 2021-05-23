@@ -17,7 +17,7 @@ for ($i=0; $i -lt $filenames.Count; $i++) {
         -Uri "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/$($psfile)" `
         -OutFile $fileDownloaded -UseBasicParsing
 
-    . $env:TEMP\$psfile >> "$($env:TEMP)\$($filename).log"
+    . $env:TEMP\$psfile *>> "$($env:TEMP)\$($filename).log"
 
 }
 
