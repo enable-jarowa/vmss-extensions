@@ -26,15 +26,15 @@ if ($f_featurearray.Contains("sfsdk")) {
 
     Write-Output "Installing /Products:ServiceFabricSDK_4_2_CU7"
     Start-Sleep 10
-    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"ServiceFabricSDK_4_2_CU7"', '/AcceptEULA' -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
+    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"ServiceFabricSDK_4_2_CU7"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
 
     Start-Sleep 10
     Write-Output "Installing /Products:ServiceFabricRuntime_7_2_CU7"
-    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"ServiceFabricRuntime_7_2_CU7"', '/AcceptEULA' -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
+    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"ServiceFabricRuntime_7_2_CU7"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-runtime.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
 
     Write-Output "Installing /Products:ServiceFabricSDK_4_2_CU7 again"
     Start-Sleep 10
-    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"ServiceFabricSDK_4_2_CU7"', '/AcceptEULA' -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
+    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"ServiceFabricSDK_4_2_CU7"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
 
     Write-Output "installation done"
 

@@ -13,7 +13,7 @@ $filenamePlugin = "plugins-execute";
 $psfilePlugin = "$($filenamePlugin).ps1";
 $fileDownloadedPlugin = "$($env:TEMP)\$($psfilePlugin)"
 Invoke-WebRequest `
-    -Uri "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/$($psfile)" `
+    -Uri "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/$($psfilePlugin)" `
     -OutFile $fileDownloadedPlugin -UseBasicParsing
 
 . $env:TEMP\$psfilePlugin *>> "$($env:TEMP)\$($filenamePlugin).log"
