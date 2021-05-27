@@ -13,7 +13,7 @@ Write-Output "Features=$($f_features)"
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 ## just install both versions all the time
-if ($f_featurearray.Contains("dotnetsdk5.0") -or $f_featurearray.Contains("dotnetsdk") {
+if ($f_featurearray.Contains("dotnetsdk5.0") -or $f_featurearray.Contains("dotnetsdk")) {
     $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
     [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
     $channel="Current"
