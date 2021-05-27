@@ -13,7 +13,7 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 ## https://verdaccio.org/docs/en/windows using Using WinSW
 ## https://github.com/winsw/winsw
-if ($f_featurearray.Contains("verdaccio")) {
+if ($f_featurearray.Contains("verdaccio_NOTUSED")) {
     $version="node-v14.17.0-win-x64"
     $msi = "$($version).zip"
 

@@ -20,6 +20,9 @@ Start-Process "msiexec" -ArgumentList '/i', "$($fileDownloaded)", '/passive', '/
 Write-Output "Installing /Products:MicrosoftAzure-ServiceFabric-CoreSDK"
 Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"MicrosoftAzure-ServiceFabric-CoreSDK"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
 
+Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"MicrosoftAzure-ServiceFabric-CoreSDK"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
+
+
 Write-Output "------------------------------------------"
 Write-Output "done"
 Write-Output "------------------------------------------"
