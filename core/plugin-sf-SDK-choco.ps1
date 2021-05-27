@@ -34,7 +34,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 powershell.exe -NoProfile Get-ExecutionPolicy -Scope CurrentUser
 
 Write-Output "Installing /ServiceFabricMeshSDK_4_2_CU7"
-choco install ServiceFabricMeshSDK_4_2_CU7  --source webpi  --confirm
+choco install ServiceFabricSDK_5_0_RTO  --source webpi  --confirm
 
 Write-Output "Installed /ServiceFabricMeshSDK_4_2_CU7"
 
