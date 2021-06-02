@@ -2,7 +2,8 @@ Write-Output "------------------------------------------"
 Write-Output "Custom script: plugin-sf-SDK.ps1"
 Write-Output "------------------------------------------"
 
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force -Scope CurrentUser 
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Force -Scope CurrentUser 
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Force -Scope LocalMachine 
 $logpath="C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\Web Platform Installer\logs\install\"
 if (!(Test-Path $logpath)) {
     mkdir "C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\Web Platform Installer\logs\install\"
