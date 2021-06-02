@@ -17,11 +17,24 @@ if (!(Test-Path $fileDownloaded -PathType leaf)) {
 }
 Start-Process "msiexec" -ArgumentList '/i', "$($fileDownloaded)", '/passive', '/quiet', '/norestart', '/qn' -NoNewWindow -Wait; 
 
+
+$testToRemove = "C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code\CleanFabric.ps1"
+$fileDownloaded = "$($env:TEMP)\$($msi)"
+if (Test-Path $testToRemove -PathType leaf) {
+    $sdkFound = Get-WmiObject -class win32_product -Filter "Name like '%Service Fabric%SDK%'"
+    if ($null -ne $sdkFound) {
+        Write-Host "Uninstall SDK - $($sdkFound.Name)"
+        $sdkFound.Uninstall()
+        Write-Host "Sleep until deinstalled 30s"
+        Sleep 30
+    }
+    powershell.exe -File "C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code\CleanFabric.ps1"
+
+}
+
+
 Write-Output "Installing /Products:MicrosoftAzure-ServiceFabric-CoreSDK"
 Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"MicrosoftAzure-ServiceFabric-CoreSDK"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
-
-Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"MicrosoftAzure-ServiceFabric-CoreSDK"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
-
 
 Write-Output "------------------------------------------"
 Write-Output "done"
