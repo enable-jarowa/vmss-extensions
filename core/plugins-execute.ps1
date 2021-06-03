@@ -21,7 +21,7 @@ for ($i=0; $i -lt $filenamesPluginAll.Count; $i++) {
         -OutFile $fileDownloadedPluginAll -UseBasicParsing
 
     if ($psfilePluginAll.Contains(".ps1")) {
-        . $env:TEMP\$psfilePluginAll *>> "$($env:TEMP)\$($filenamePluginAll).log"
+        . $env:TEMP\$psfilePluginAll @args *>> "$($env:TEMP)\$($filenamePluginAll).log"
     }
 
 }
