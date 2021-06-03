@@ -19,6 +19,14 @@ if (!(Test-Path $fileDownloaded -PathType leaf)) {
 Start-Process "msiexec" -ArgumentList '/i', "$($fileDownloaded)", '/passive', '/quiet', '/norestart', '/qn' -NoNewWindow -Wait; 
 
 
+# https://stackoverflow.com/questions/29723429/chef-webpi-cookbook-fails-install-in-azure
+# webpicmd installer has some issues with writing log files to app settings
+# only hack described above in link
+
+Write-Output "Reset LocalApp Folder to TEMP"
+Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-temp.reg"
+
+
 $testToRemove = "C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code\CleanFabric.ps1"
 $fileDownloaded = "$($env:TEMP)\$($msi)"
 if (Test-Path $testToRemove -PathType leaf) {
@@ -32,13 +40,6 @@ if (Test-Path $testToRemove -PathType leaf) {
     powershell.exe -File "C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code\CleanFabric.ps1"
 
 }
-
-# https://stackoverflow.com/questions/29723429/chef-webpi-cookbook-fails-install-in-azure
-# webpicmd installer has some issues with writing log files to app settings
-# only hack described above in link
-
-Write-Output "Reset LocalApp Folder to TEMP"
-Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-temp.reg"
 
 Write-Output "Installing /Products:MicrosoftAzure-ServiceFabric-CoreSDK"
 Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"MicrosoftAzure-ServiceFabric-CoreSDK"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
