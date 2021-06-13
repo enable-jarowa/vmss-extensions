@@ -1,11 +1,11 @@
 {
-    "name": "sf-enable-bern-pool",
+    "name": "SampleCluster",
     "clusterConfigurationVersion": "1.0.0",
     "apiVersion": "05-2020",
     "nodes": [
         {
             "nodeName": "vm0",
-            "iPAddress": "10.61.2.4",
+            "iPAddress": "localhost",
             "nodeTypeRef": "NodeType0",
             "faultDomain": "fd:/dc1/r0",
             "upgradeDomain": "UD0"
@@ -14,7 +14,7 @@
     "properties": {
         "diagnosticsStore": 
         {
-            "metadata":  "Please replace the diagnostics file share with an actual file share accessible from all cluster machines. For example, \\\\10.61.2.4\\DiagnosticsStore.",
+            "metadata":  "Please replace the diagnostics file share with an actual file share accessible from all cluster machines. For example, \\\\localhost\\DiagnosticsStore.",
             "dataDeletionAgeInDays": "21",
             "storeType": "FileShare",
             "connectionstring": "S:\\ProgramData\\SF\\DiagnosticsStore"
@@ -24,9 +24,34 @@
             "ClusterCredentialType": "X509",
             "ServerCredentialType": "X509",
             "CertificateInformation": {
+
+                "ClusterCertificateCommonNames": {
+                    "CommonNames": [
+                    {
+                        "CertificateCommonName": "primary-sf-enable-bern-pool.switzerlandnorth.cloudapp.azure.com",
+                        "CertificateIssuerThumbprint": "9e 2a e6 db 47 88 69 a8 38 c5 cb b9 59 58 eb 36 79 62 58 99,54 f6 f8 0f 83 67 c3 90 1a a9 e1 c0 f5 34 86 bf 72 06 70 c5]"
+                    }
+                    ],
+                    "X509StoreName": "My"
+                },
+                "ClusterCertificateIssuerStores": [
+                    {
+                        "IssuerCommonName": "primary-sf-enable-bern-pool.switzerlandnorth.cloudapp.azure.com",
+                        "X509StoreNames" : "My"
+                    }
+                ],
                 "ClusterCertificate": {
                     "Thumbprint": "9e 2a e6 db 47 88 69 a8 38 c5 cb b9 59 58 eb 36 79 62 58 99",
                     "ThumbprintSecondary": "54 f6 f8 0f 83 67 c3 90 1a a9 e1 c0 f5 34 86 bf 72 06 70 c5",
+                    "X509StoreName": "My"
+                },
+                "ServerCertificateCommonNames": {
+                    "CommonNames": [
+                    {
+                        "CertificateCommonName": "primary-sf-enable-bern-pool.switzerlandnorth.cloudapp.azure.com",
+                        "CertificateIssuerThumbprint": "9e 2a e6 db 47 88 69 a8 38 c5 cb b9 59 58 eb 36 79 62 58 99,54 f6 f8 0f 83 67 c3 90 1a a9 e1 c0 f5 34 86 bf 72 06 70 c5]"
+                    }
+                    ],
                     "X509StoreName": "My"
                 },
                 "ServerCertificate": {
@@ -34,6 +59,12 @@
                     "ThumbprintSecondary": "54 f6 f8 0f 83 67 c3 90 1a a9 e1 c0 f5 34 86 bf 72 06 70 c5",
                     "X509StoreName": "My"
                 },
+                "ServerCertificateIssuerStores": [
+                    {
+                        "IssuerCommonName": "primary-sf-enable-bern-pool.switzerlandnorth.cloudapp.azure.com",
+                        "X509StoreNames" : "My"
+                    }
+                ],
                 "ClientCertificateThumbprints": [
                     {
                         "CertificateThumbprint": "E4 61 5B DC 0B 83 15 95 B8 13 80 84 65 60 F1 01 E4 56 3A 85",
@@ -56,6 +87,14 @@
                     "ThumbprintSecondary": "04 fb dc 67 70 b5 62 1d f0 32 2e 84 34 dc 2e 14 c6 2d b1 85",
                     "X509StoreName": "My"
                 },
+                "ReverseProxyCertificateCommonNames": {
+                    "CommonNames": [
+                        {
+                        "CertificateCommonName": "proxy-sf-enable-bern-pool.switzerlandnorth.cloudapp.azure.com"
+                        }
+                    ],
+                    "X509StoreName": "My"
+                }
             }
         },
         "nodeTypes": [
