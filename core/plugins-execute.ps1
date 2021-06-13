@@ -13,7 +13,7 @@ $filenamesPluginAll = @(
     "EnableLocalSecureCluster.ps1",
     "plugin-sf-standalone.ps1",
 
-    "plugin-sf-network-standalone.ps1",
+    "plugin-sf-network-standalone.ps1"
 
 )
 
