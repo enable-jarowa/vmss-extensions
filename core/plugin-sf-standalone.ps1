@@ -40,7 +40,7 @@ if ($f_featurearray.Contains("sfstandalone")) {
          Write-Output "SF standalone cluster already installed $($versionFolder)"
     }
 
-    . $env:TEMP\$versionFolder\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($env:TEMP)\ClusterConfig.X509.OneNode.json" -AcceptEULA *>> "$($env:TEMP)\plugin-sf-standalone-CreateServiceFabricCluster.log"
+    . $env:TEMP\$versionFolder\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($env:TEMP)\ClusterConfig.X509.OneNode.AAD.json" -AcceptEULA *>> "$($env:TEMP)\plugin-sf-standalone-CreateServiceFabricCluster.log"
 
 } else {
     Write-Output "SF standalone cluster is not installed"
