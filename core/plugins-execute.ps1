@@ -8,10 +8,10 @@ $filenamesPluginAll = @(
     "plugin-sf-SDK-temp.reg",
     "plugin-sf-SDK.ps1",
     "plugin-sf-network.ps1",
-    "plugin-exclude-sf-defender.ps1"
+    "plugin-exclude-sf-defender.ps1",
 
-    "EnableLocalSecureCluster.ps1"
-    "plugin-sf-standalone.ps1"
+    "EnableLocalSecureCluster.ps1",
+    "plugin-sf-standalone.ps1",
 
     "plugin-sf-network-standalone.ps1",
 
