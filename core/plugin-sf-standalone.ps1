@@ -41,6 +41,7 @@ if ($f_featurearray.Contains("sfstandalone")) {
     }
 
     #. $env:TEMP\$versionFolder\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($env:TEMP)\ClusterConfig.X509.OneNode.AAD.json" -AcceptEULA *>> "$($env:TEMP)\plugin-sf-standalone-CreateServiceFabricCluster.log"
+    #. $env:TEMP\Microsoft.Azure.ServiceFabric.WindowsServer.7.2.413.9590\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($env:TEMP)\ClusterConfig.X509.OneNode.AAD.json" -AcceptEULA 
 
 } else {
     Write-Output "SF standalone cluster is not installed"
