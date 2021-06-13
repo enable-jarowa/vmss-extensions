@@ -10,6 +10,8 @@ $f_features=$args[5]
 $f_certCN=$args[6]
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
+Write-Output "Features=$($f_features)"
+Write-Output "CN=$($f_certCN)"
 if ($f_featurearray.Contains("sfstandalone")) {
     Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force -Scope CurrentUser 
     $logpath="C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\Web Platform Installer\logs\install\"
