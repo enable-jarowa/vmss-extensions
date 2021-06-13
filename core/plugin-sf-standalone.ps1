@@ -7,6 +7,7 @@ $f_drive = $args[2]
 $f_account = $args[3]
 $f_key= $args[4]
 $f_features=$args[5]
+$f_certCN=$args[6]
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("sfstandalone")) {
@@ -74,6 +75,8 @@ if ($f_featurearray.Contains("sfstandalone")) {
     } else {
          Write-Output "SF standalone cluster already installed $($versionFolder)"
     }
+
+    . $env:TEMP\EnableLocalSecureCluster.ps1 "$($f_certCN)" *>> "$($env:TEMP)\EnableLocalSecureCluster.log"
 
     #Write-Output "Reset LocalApp Folder to ORIG"
     #Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-orig.reg"

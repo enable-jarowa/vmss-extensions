@@ -7,20 +7,23 @@
 #=======
 param
 (
-    [Parameter(Mandatory=$False, Position=1)]
+    [Parameter(Mandatory=$True, Position=1)]
+    [string] $certCnName,
+
+    [Parameter(Mandatory=$False, Position=3)]
     [string] $jsonFileTemplate,
     #[string] $jsonFileTemplate = 'C:\\Program Files\\Microsoft SDKs\\Service Fabric\\ClusterSetup\\Secure\\OneNode\\ClusterManifestTemplate.json',
 
-    [Parameter(Mandatory=$False, Position=3)]
+    [Parameter(Mandatory=$False, Position=5)]
     [switch] $AsSecureCluster = $True,
     
-    [Parameter(Mandatory=$False, Position=4)]
+    [Parameter(Mandatory=$False, Position=6)]
     [switch] $UseMachineName,
 
-    [Parameter(Mandatory=$False, Position=5)]
+    [Parameter(Mandatory=$False, Position=7)]
     [switch] $CreateOneNodeCluster = $True,
 
-    [Parameter(Mandatory=$False, Position=6)]
+    [Parameter(Mandatory=$False, Position=8)]
     [switch] $Auto
 )
 
