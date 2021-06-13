@@ -7,11 +7,11 @@ $f_drive = $args[2]
 $f_account = $args[3]
 $f_key= $args[4]
 $f_features=$args[5]
-$f_certCN=$args[6]
+#$f_certCN=$args[6]
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
-Write-Output "Features=$($f_features)"
-Write-Output "CN=$($f_certCN)"
+#Write-Output "Features=$($f_features)"
+#Write-Output "CN=$($f_certCN)"
 if ($f_featurearray.Contains("sfstandalone")) {
     Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force -Scope CurrentUser 
 
