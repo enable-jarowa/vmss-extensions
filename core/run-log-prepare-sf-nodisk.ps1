@@ -15,7 +15,7 @@ Invoke-WebRequest `
     -Uri "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/$($psfilePlugin)" `
     -OutFile $fileDownloadedPlugin -UseBasicParsing
 
-. $env:TEMP\$psfilePlugin *>> "$($env:TEMP)\$($filenamePlugin).log"
+. $env:TEMP\$psfilePlugin @args *>> "$($env:TEMP)\$($filenamePlugin).log"
 . $PSScriptRoot\install-nodejs.ps1 @args *>> "$($env:TEMP)\install-nodejs.log"
 . $PSScriptRoot\install-sfsdk.ps1 @args *>> "$($env:TEMP)\install-sfsdk.log"
 . $PSScriptRoot\install-msbuild-tools.ps1 @args *>> "$($env:TEMP)\install-msbuild-tools.log"

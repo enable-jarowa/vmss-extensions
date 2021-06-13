@@ -14,44 +14,6 @@ Write-Output "Features=$($f_features)"
 Write-Output "CN=$($f_certCN)"
 if ($f_featurearray.Contains("sfstandalone")) {
     Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force -Scope CurrentUser 
-    $logpath="C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\Web Platform Installer\logs\install\"
-    if (!(Test-Path $logpath)) {
-        mkdir "C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\Web Platform Installer\logs\install\"
-    }
-    Get-LocalUser -Name master | Set-LocalUser -PasswordNeverExpires $True
-    $msi = "WebPlatformInstaller_x64_en-US.msi"
-    $fileDownloaded = "$($env:TEMP)\$($msi)"
-    if (!(Test-Path $fileDownloaded -PathType leaf)) {
-        Invoke-WebRequest `
-            -Uri "https://download.microsoft.com/download/8/4/9/849DBCF2-DFD9-49F5-9A19-9AEE5B29341A/WebPlatformInstaller_x64_en-US.msi" `
-            -OutFile $fileDownloaded -UseBasicParsing
-    }
-    Start-Process "msiexec" -ArgumentList '/i', "$($fileDownloaded)", '/passive', '/quiet', '/norestart', '/qn' -NoNewWindow -Wait; 
-
-
-    # https://stackoverflow.com/questions/29723429/chef-webpi-cookbook-fails-install-in-azure
-    # webpicmd installer has some issues with writing log files to app settings
-    # only hack described above in link
-
-    #Write-Output "Reset LocalApp Folder to TEMP"
-    #Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-temp.reg"
-
-
-    #$testToRemove = "C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code\CleanFabric.ps1"
-    #$fileDownloaded = "$($env:TEMP)\$($msi)"
-    #if (Test-Path $testToRemove -PathType leaf) {
-    #    $sdkFound = Get-WmiObject -class win32_product -Filter "Name like '%Service Fabric%SDK%'"
-    #    if ($null -ne $sdkFound) {
-    #        Write-Host "Uninstall SDK - $($sdkFound.Name)"
-    #        $sdkFound.Uninstall()
-    #        Write-Host "Sleep until deinstalled 30s"
-    #        Start-Sleep 30
-    #    }
-    #    powershell.exe -File "C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code\CleanFabric.ps1"
-    #}
-
-    Write-Output "Installing /Products:MicrosoftAzure-ServiceFabric-CoreSDK"
-    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"MicrosoftAzure-ServiceFabric-CoreSDK"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
 
     # installation docs: https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-creation-for-windows-server
     # List of all SF cabs - https://docs.microsoft.com/en-us/samples/azure-samples/service-fabric-dotnet-standalone-cluster-configuration/service-fabric-standalone-cluster-configuration/
@@ -78,10 +40,8 @@ if ($f_featurearray.Contains("sfstandalone")) {
          Write-Output "SF standalone cluster already installed $($versionFolder)"
     }
 
-    . $env:TEMP\EnableLocalSecureCluster.ps1 "$($f_certCN)" *>> "$($env:TEMP)\EnableLocalSecureCluster.log"
+    . $env:TEMP\$versionFolder\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($env:TEMP)\ClusterConfig.X509.OneNode.json" -AcceptEULA *>> "$($env:TEMP)\EnableLocalSecureCluster.log"
 
-    #Write-Output "Reset LocalApp Folder to ORIG"
-    #Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-orig.reg"
 } else {
     Write-Output "SF standalone cluster is not installed"
 }
