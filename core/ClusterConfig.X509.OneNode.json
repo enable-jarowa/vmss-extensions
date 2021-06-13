@@ -1,10 +1,10 @@
 {
-    "name": "sf-enable-bern-pool",
+    "name": "vmssbrn",
     "clusterConfigurationVersion": "1.0.0",
     "apiVersion": "05-2020",
     "nodes": [
         {
-            "nodeName": "vm0",
+            "nodeName": "vmssbrn0",
             "iPAddress": "10.61.2.4",
             "nodeTypeRef": "NodeType0",
             "faultDomain": "fd:/dc1/r0",
