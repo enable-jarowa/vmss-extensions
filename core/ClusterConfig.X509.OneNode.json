@@ -42,6 +42,10 @@
                     {
                         "CertificateThumbprint": "E4 61 5B DC 0B 83 15 95 B8 13 80 84 65 60 F1 01 E4 56 3A 85",
                         "IsAdmin": true
+                    },
+                    {
+                        "CertificateThumbprint": "17 FD 6C 9E 74 54 A5 C1 B1 CB 1A 17 B2 8F 4D 4B E9 E8 97 9E",
+                        "IsAdmin": true
                     }
                 ],
                 "ClientCertificateCommonNames": [
@@ -49,13 +53,18 @@
                         "CertificateCommonName": "admin-sf-enable-bern-pool.switzerlandnorth.cloudapp.azure.com",
                         "CertificateIssuerThumbprint": "E4 61 5B DC 0B 83 15 95 B8 13 80 84 65 60 F1 01 E4 56 3A 85",
                         "IsAdmin": true
+                    },
+                    {
+                        "CertificateCommonName": "admin-swiss-pool.enable.jarowa.ch",
+                        "CertificateIssuerThumbprint": "17 FD 6C 9E 74 54 A5 C1 B1 CB 1A 17 B2 8F 4D 4B E9 E8 97 9E",
+                        "IsAdmin": true
                     }
                 ],
                 "ReverseProxyCertificate": {
                     "Thumbprint": "04 fb dc 67 70 b5 62 1d f0 32 2e 84 34 dc 2e 14 c6 2d b1 85",
                     "ThumbprintSecondary": "04 fb dc 67 70 b5 62 1d f0 32 2e 84 34 dc 2e 14 c6 2d b1 85",
                     "X509StoreName": "My"
-                },
+                }
             }
         },
         "nodeTypes": [
