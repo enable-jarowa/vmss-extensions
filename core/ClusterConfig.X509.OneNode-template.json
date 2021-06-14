@@ -68,8 +68,8 @@
                 "httpGatewayEndpointPort": "19080",
                 "reverseProxyEndpointPort": "19081",
                 "applicationPorts": {
-                    "startPort": "8000",
-                    "endPort": "8010"
+                    "startPort": "20000",
+                    "endPort": "30000"
                 },
                 "isPrimary": true
             }
