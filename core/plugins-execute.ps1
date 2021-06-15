@@ -11,7 +11,6 @@ $filenamesPluginAll = @(
     "plugin-sf-network-standalone.ps1",
     "plugin-exclude-sf-defender.ps1",
     "ClusterConfig.X509.OneNode-template.json",
-    "ClusterConfig.X509.OneNode.json",
     "plugin-sf-standalone.ps1"
 )
 
