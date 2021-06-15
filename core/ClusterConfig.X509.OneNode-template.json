@@ -1,11 +1,11 @@
 {
-    "name": "SampleCluster",
+    "name": "EnableSingleNodeCluster",
     "clusterConfigurationVersion": "1.0.0",
     "apiVersion": "05-2020",
     "nodes": [
         {
-            "nodeName": "vm0",
-            "iPAddress": "localhost",
+            "nodeName": "[vmssName]0",
+            "iPAddress": "[IpAddress]",
             "nodeTypeRef": "NodeType0",
             "faultDomain": "fd:/dc1/r0",
             "upgradeDomain": "UD0"
@@ -14,7 +14,7 @@
     "properties": {
         "diagnosticsStore": 
         {
-            "metadata":  "Please replace the diagnostics file share with an actual file share accessible from all cluster machines. For example, \\\\localhost\\DiagnosticsStore.",
+            "metadata":  "Please replace the diagnostics file share with an actual file share accessible from all cluster machines. For example, \\\\[IpAddress]\\DiagnosticsStore.",
             "dataDeletionAgeInDays": "21",
             "storeType": "FileShare",
             "connectionstring": "S:\\ProgramData\\SF\\DiagnosticsStore"
@@ -42,12 +42,21 @@
                     {
                         "CertificateThumbprint": "[admin-Thumbprint]",
                         "IsAdmin": true
+                    },
+                    {
+                        "CertificateThumbprint": "[admin-continent-Thumbprint]",
+                        "IsAdmin": true
                     }
                 ],
                 "ClientCertificateCommonNames": [
                     {
                         "CertificateCommonName": "[admin-CertificateCommonName]",
                         "CertificateIssuerThumbprint": "[admin-Thumbprint]",
+                        "IsAdmin": true
+                    },
+                    {
+                        "CertificateCommonName": "[admin-continent-CertificateCommonName]",
+                        "CertificateIssuerThumbprint": "[admin-continent-Thumbprint]",
                         "IsAdmin": true
                     }
                 ],

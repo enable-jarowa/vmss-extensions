@@ -1,4 +1,4 @@
-Write-Output "------------------------------------------"
+  Write-Output "------------------------------------------"
 Write-Output "Custom script: plugin-sf-standalone.ps1"
 Write-Output "------------------------------------------"
 $f_url = $args[0]
@@ -9,6 +9,105 @@ $f_key= $args[4]
 $f_features=$args[5]
 #$f_certCN=$args[6]
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
+
+
+
+function FindAndReplace([string]$filePath, [string]$toReplace, [string]$newString)
+{
+    (Get-Content $filePath) | ForEach-Object {$_ -replace $toReplace, $newString } | Set-Content $filePath
+}
+
+function GetVmssName([bool]$useMachineName)
+{
+    $machineName = 'localhost';
+    if ($useMachineName)
+    {
+        $machineName = [System.Net.Dns]::GetHostEntry([string]$env:computername).HostName;
+        ## remove index no of vmss - e.g. vmssbre00000000 --> vmssbre
+        $machineName = $machineName.Split("0").Trim()[0]
+    }
+    return $machineName;
+}
+
+function GetIpAddress() {
+    return (Get-NetIPAddress -AddressFamily IPV4 | where-object { $_.PrefixOrigin -eq 'Dhcp'}).IPAddress
+}
+function GetCertificate($srcStore, [String] $SubjectLike) {
+    return $srcStore.certificates | Where-Object { $_.Subject -like "$($SubjectLike)"}
+}
+function GetThumbprint($cert, [bool] $withSpaces) {
+    $thumbprint = $cert.Thumbprint
+    Write-Host "thumbprint=$($thumbprint)"
+    if ($withSpaces) {
+        $result = "";
+        for ($i = 0; $i -lt $thumbprint.Length; $i++) {
+            $c = $thumbprint[$i]
+            if ($i -gt 0 -and $i % 2 -eq 0) {
+                $result = $result + " $($c)"
+            } else {
+                $result = $result + "$($c)"
+            }
+        }
+        return $result.ToLower()
+    } else {
+        return $thumbprint.ToLower()
+    }
+}
+function GetCommonName($cert) {
+    ##CN=admin-swiss-pool.enable.jarowa.ch, DC=dev, OU=enable, O=JAROWA AG, L=Zug, S=ZG, C=CH
+    ##  --> admin-swiss-pool.enable.jarowa.ch
+    ##CN=primary-sf-enable-bern-pool.switzerlandnorth.cloudapp.azure.com
+    ##  --> primary-sf-enable-bern-pool.switzerlandnorth.cloudapp.azure.com
+    $subject=$cert.Subject
+    $cnPart = ($subject.Split(",")) | Where-Object { $_ -like "CN=*" }
+    $cn = ($cnPart.Split("="))[1]
+    Write-Host "$($cn)"
+    return $cn
+}
+
+
+function PrepareClusterManifest([string]$manifestFileTemplate)
+{
+    $manifestFile = Join-Path -Path $env:TEMP -ChildPath 'ClusterConfig.X509.OneNode.Instance.json'
+    Copy-Item $manifestFileTemplate $manifestFile -Force
+
+    $vmssName = GetVmssName -useMachineName $True
+    $ipAddress = GetIpAddress
+
+    FindAndReplace -filePath $manifestFile -toReplace '\[vmssName\]' -newString $vmssName
+    FindAndReplace -filePath $manifestFile -toReplace '\[IpAddress\]' -newString $ipAddress
+
+    $srcStoreScope = 'LocalMachine'
+    $srcStoreName = 'My'
+    $srcStore = New-Object System.Security.Cryptography.X509Certificates.X509Store $srcStoreName, $srcStoreScope
+    $srcStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadOnly)
+
+    $primary = GetCertificate -srcStore $srcStore -SubjectLike "CN=primary-*"
+    Write-Host "$($primary.Subject)"
+    $secondary = GetCertificate -srcStore $srcStore -SubjectLike "CN=secondary-*"
+    Write-Host "$($secondary.Subject)"
+    $proxy = GetCertificate -srcStore $srcStore -SubjectLike "CN=proxy-*"
+    Write-Host "$($proxy.Subject)"
+    $admin = GetCertificate -srcStore $srcStore -SubjectLike "CN=admin-*.azure.com"
+    Write-Host "$($admin.Subject)"
+    $adminContinent = GetCertificate -srcStore $srcStore -SubjectLike "CN=admin-*.enable.*"
+       Write-Host "$($adminContinent.Subject)"
+ 
+    FindAndReplace -filePath $manifestFile -toReplace '\[primary-Thumbprint\]' -newString (GetThumbprint -cert $primary -withSpaces $True)
+    FindAndReplace -filePath $manifestFile -toReplace '\[secondary-Thumbprint\]' -newString (GetThumbprint -cert $secondary -withSpaces $True)
+    FindAndReplace -filePath $manifestFile -toReplace '\[proxy-Thumbprint\]' -newString (GetThumbprint -cert $proxy -withSpaces $True)
+    
+    FindAndReplace -filePath $manifestFile -toReplace '\[admin-Thumbprint\]' -newString (GetThumbprint -cert $admin -withSpaces $True)
+    FindAndReplace -filePath $manifestFile -toReplace '\[admin-continent-Thumbprint\]' -newString (GetThumbprint -cert $adminContinent -withSpaces $True)
+    FindAndReplace -filePath $manifestFile -toReplace '\[admin-CertificateCommonName\]' -newString (GetCommonName -cert $admin)
+    FindAndReplace -filePath $manifestFile -toReplace '\[admin-continent-CertificateCommonName\]' -newString (GetCommonName -cert $adminContinent)
+
+    $srcStore.Close()
+
+    return $manifestFile
+}
+
+
 
 #Write-Output "Features=$($f_features)"
 #Write-Output "CN=$($f_certCN)"
@@ -40,9 +139,13 @@ if ($f_featurearray.Contains("sfstandalone")) {
          Write-Output "SF standalone cluster already installed $($versionFolder)"
     }
 
-    . $env:TEMP\$versionFolder\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($env:TEMP)\ClusterConfig.X509.OneNode.json" -AcceptEULA *>> "$($env:TEMP)\plugin-sf-standalone-CreateServiceFabricCluster.log"
     # for demo
     #. $env:TEMP\Microsoft.Azure.ServiceFabric.WindowsServer.7.2.413.9590\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($env:TEMP)\ClusterConfig.X509.OneNode.json" -AcceptEULA 
+
+    $newManifestFile = PrepareClusterManifest -manifestFileTemplate "$($env:TEMP)\ClusterConfig.X509.OneNode-template.json"
+    Write-Output "Result manifest: $($newManifestFile)"
+
+    . $env:TEMP\$versionFolder\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($newManifestFile)" -AcceptEULA *>> "$($env:TEMP)\plugin-sf-standalone-CreateServiceFabricCluster.log"
 
 } else {
     Write-Output "SF standalone cluster is not installed"
@@ -52,3 +155,5 @@ Write-Output "------------------------------------------"
 Write-Output "done"
 Write-Output "------------------------------------------"
 $True
+ 
+ 
