@@ -30,7 +30,12 @@ function GetVmssName([bool]$useMachineName)
 }
 
 function GetIpAddress() {
-    return (Get-NetIPAddress -AddressFamily IPV4 | where-object { $_.PrefixOrigin -eq 'Dhcp'}).IPAddress
+    $ip = (Get-NetIPAddress -AddressFamily IPV4 | where-object { $_.PrefixOrigin -eq 'Dhcp'}).IPAddress
+    if ($ip) {
+        return $ip
+    } else {
+        return (Get-NetIPAddress -AddressFamily IPV4 | where-object { $_.PrefixOrigin -eq 'Manual'}).IPAddress
+    }
 }
 function GetCertificate($srcStore, [String] $SubjectLike) {
     return $srcStore.certificates | Where-Object { $_.Subject -like "$($SubjectLike)"}
