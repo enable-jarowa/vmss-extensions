@@ -17,7 +17,7 @@
             "metadata":  "Please replace the diagnostics file share with an actual file share accessible from all cluster machines. For example, \\\\[IpAddress]\\DiagnosticsStore.",
             "dataDeletionAgeInDays": "21",
             "storeType": "FileShare",
-            "connectionstring": "S:\\ProgramData\\SF\\DiagnosticsStore"
+            "connectionstring": "[SF-diag-root-drive]\\ProgramData\\SF\\DiagnosticsStore"
         },
         "security": {
             "metadata": "The Credential type X509 indicates this is cluster is secured using X509 Certificates. The thumbprint format is - d5 ec 42 3b 79 cb e5 07 fd 83 59 3c 56 b9 d5 31 24 25 42 64.",
@@ -89,11 +89,11 @@
                 "parameters": [
                     {
                         "name": "FabricDataRoot",
-                        "value": "S:\\ProgramData\\SF"
+                        "value": "[SF-data-root-drive]\\ProgramData\\SF"
                     },
                     {
                         "name": "FabricLogRoot",
-                        "value": "S:\\ProgramData\\SF\\Log"
+                        "value": "[SF-log-root-drive]\\ProgramData\\SF\\Log"
                     }
                 ]
             }

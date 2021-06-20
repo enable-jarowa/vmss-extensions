@@ -10,6 +10,7 @@
 ## - sfstandalone
 ## example: powershell.exe .\run-log-plugins.ps1 1 2 3 4 5 "sfstandalone"
 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $filenamePlugin = "plugins-execute";
 $psfilePlugin = "$($filenamePlugin).ps1";
 $fileDownloadedPlugin = "$($env:TEMP)\$($psfilePlugin)"

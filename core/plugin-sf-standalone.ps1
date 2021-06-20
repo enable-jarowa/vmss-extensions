@@ -77,6 +77,15 @@ function PrepareClusterManifest([string]$manifestFileTemplate)
     FindAndReplace -filePath $manifestFile -toReplace '\[vmssName\]' -newString $vmssName
     FindAndReplace -filePath $manifestFile -toReplace '\[IpAddress\]' -newString $ipAddress
 
+    $drive = "S:"
+    if ($null -eq (Get-PSDrive S -ErrorAction ignore)) {
+        $drive = "C:"
+    }
+    FindAndReplace -filePath $manifestFile -toReplace '\[SF-log-root-drive\]' -newString $drive
+    FindAndReplace -filePath $manifestFile -toReplace '\[SF-data-root-drive\]' -newString $drive
+    FindAndReplace -filePath $manifestFile -toReplace '\[SF-diag-root-drive\]' -newString $drive
+    
+
     $srcStoreScope = 'LocalMachine'
     $srcStoreName = 'My'
     $srcStore = New-Object System.Security.Cryptography.X509Certificates.X509Store $srcStoreName, $srcStoreScope
