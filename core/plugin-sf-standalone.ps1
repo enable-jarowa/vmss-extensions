@@ -129,7 +129,8 @@ if ($f_featurearray.Contains("sfstandalone")) {
        "v7.2.413.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/7.2.413.9590/Microsoft.Azure.ServiceFabric.WindowsServer.7.2.413.9590.zip";
        "v8.0.521.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/8.0.521.9590/Microsoft.Azure.ServiceFabric.WindowsServer.8.0.521.9590.zip";
     }
-    $version = "7.2.413.9590"
+    #$version = "7.2.413.9590"
+    $version = "8.0.521.9590"
     $versionKey = "v$($version)"
     $versionFolder = "Microsoft.Azure.ServiceFabric.WindowsServer.$($version)"
     $msi = "$($versionFolder).zip"
