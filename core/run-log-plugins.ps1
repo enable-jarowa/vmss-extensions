@@ -18,5 +18,6 @@ Invoke-WebRequest `
     -Uri "https://raw.githubusercontent.com/enable-jarowa/vmss-extensions/main/core/$($psfilePlugin)" `
     -OutFile $fileDownloadedPlugin -UseBasicParsing
 
+Write-Host "Check all logs files in folder '$($env:temp)'"
 . $env:TEMP\$psfilePlugin @args *>> "$($env:TEMP)\$($filenamePlugin).log"
 
