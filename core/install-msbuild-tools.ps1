@@ -43,6 +43,21 @@ if ($f_featurearray.Contains("msbuildtools")) {
 
         Write-Output "installation done"
 
+        Write-Output "installation AzCopy"
+
+        $msi = "AzCopy.zip"
+        $fileDownloaded = "$($env:TEMP)\$($msi)"
+        if (!(Test-Path $fileDownloaded -PathType leaf)) {
+            Invoke-WebRequest `
+                -Uri "https://aka.ms/downloadazcopy-v10-windows" `
+                -OutFile $fileDownloaded
+        }
+        Expand-Archive $fileDownloaded "$($env:TEMP)/AzCopy" -Force
+        mkdir -p "C:\Program Files (x86)\Microsoft SDKs\AzCopy"
+        Get-ChildItem "$($env:TEMP)/AzCopy/*/azcopy.exe" | Move-Item -Destination "C:\Program Files (x86)\Microsoft SDKs\AzCopy\AzCopy.exe" -Force
+
+
+
     } else {
         Write-Output "Visual Studio Build Tools already installed"
     }
