@@ -53,14 +53,23 @@ if ($f_featurearray.Contains("msbuildtools")) {
                 -OutFile $fileDownloaded
         }
         Expand-Archive $fileDownloaded "$($env:TEMP)/AzCopy" -Force
-        mkdir -p "C:\Program Files (x86)\Microsoft SDKs\AzCopy"
-        Get-ChildItem "$($env:TEMP)/AzCopy/*/azcopy.exe" | Move-Item -Destination "C:\Program Files (x86)\Microsoft SDKs\AzCopy\AzCopy.exe" -Force
+        $location="C:\Program Files (x86)\Microsoft SDKs\AzCopy"
+        mkdir -p "$($location)"
+        Get-ChildItem "$($env:TEMP)/AzCopy/*/azcopy.exe" | Move-Item -Destination "$($location)\AzCopy.exe" -Force
+
+        $newPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+        if (!$newPath.Contains("AzCopy")) {
+            $newPath += ";$($location)"
+            $newPath = [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
+            Write-Output "added AzCopy to path"
+        } else {
+            Write-Output "AzCopy is already in path"
+        }
 
 
-
-    } else {
-        Write-Output "Visual Studio Build Tools already installed"
-    }
+        } else {
+            Write-Output "Visual Studio Build Tools already installed"
+        }
 
 
 }
