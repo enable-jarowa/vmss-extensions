@@ -12,7 +12,7 @@ $exclPaths = @(
     "C:\Program Files\Microsoft Service Fabric"
 )
 
-for ($defenderI=0; $defenderI -lt $exclPaths.Count; $defenderI+) {
+for ($defenderI=0; $defenderI -lt $exclPaths.Count; $defenderI++) {
     $exclPath = $exclPaths[$defenderI]
     if (($null -eq $allExclPaths) -or (!$allExclPaths.Contains($exclPath))) {
         Add-MpPreference -ExclusionPath $exclPath
