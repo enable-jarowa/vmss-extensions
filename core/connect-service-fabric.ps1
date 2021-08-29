@@ -6,9 +6,9 @@ function GetThumbprint($cert, [bool] $withSpaces) {
     Write-Host "thumbprint=$($thumbprint)"
     if ($withSpaces) {
         $result = "";
-        for ($i = 0; $i -lt $thumbprint.Length; $i++) {
+        for ($thi = 0; $thi -lt $thumbprint.Length; $thi+) {
             $c = $thumbprint[$i]
-            if ($i -gt 0 -and $i % 2 -eq 0) {
+            if ($thi -gt 0 -and $thi % 2 -eq 0) {
                 $result = $result + " $($c)"
             } else {
                 $result = $result + "$($c)"
