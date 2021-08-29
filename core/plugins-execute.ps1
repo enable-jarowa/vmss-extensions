@@ -15,8 +15,8 @@ $filenamesPluginAll = @(
     "plugin-sf-standalone.ps1"
 )
 
-for ($i=0; $i -lt $filenamesPluginAll.Count; $i++) {
-    $filenamePluginAll = $filenamesPluginAll[$i]
+for ($pluginsI=0; $pluginsI -lt $filenamesPluginAll.Count; $pluginsI++) {
+    $filenamePluginAll = $filenamesPluginAll[$pluginsI]
     $psfilePluginAll = "$($filenamePluginAll)";
     $fileDownloadedPluginAll = "$($env:TEMP)\$($psfilePluginAll)"
     Invoke-WebRequest `
