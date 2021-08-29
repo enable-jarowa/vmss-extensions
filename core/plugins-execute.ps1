@@ -4,6 +4,7 @@ Write-Output "------------------------------------------"
 
 $filenamesPluginAll = @(
     ##"plugin-sf-SDK-choco",
+    "plugin-timezone.ps1",
     "plugin-sf-SDK-orig.reg",
     "plugin-sf-SDK-temp.reg",
     "plugin-sf-SDK.ps1",
