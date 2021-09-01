@@ -15,7 +15,9 @@ if ($f_featurearray.Contains("sfsdk")) {
     if (!(Test-Path $logpath)) {
         mkdir "C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\Web Platform Installer\logs\install\"
     }
-    Get-LocalUser -Name master | Set-LocalUser -PasswordNeverExpires $True
+    if (Get-LocalUser -Name master -ErrorAction Ignore) {
+        Get-LocalUser -Name master | Set-LocalUser -PasswordNeverExpires $True
+    }
     $msi = "WebPlatformInstaller_x64_en-US.msi"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
     if (!(Test-Path $fileDownloaded -PathType leaf)) {
