@@ -26,16 +26,18 @@ if ($f_featurearray.Contains("msbuildtools")) {
     Write-Output "Install Az.Websites"
     Install-Module -Name Mdbc -Force
     Write-Output "Install Mdbc"
-
-    pwsh.exe -Command "Install-Module AzTable -Force"
+    
+    ## still needs fix parameter - because powershell does not have $env path updated
+    $location="C:\Program Files\PowerShell\7"
+    Start-Process -Wait "$($location)\pwsh.exe" -ArgumentList "-Command", "Install-Module AzTable -Force"
     Write-Output "pwsh: Install AzTable"
-    pwsh.exe -Command "Install-Module Az.Storage -Force"
+    Start-Process -Wait "$($location)\pwsh.exe" -ArgumentList "-Command", "Install-Module Az.Storage -Force"
     Write-Output "pwsh: Install Az.Storage"
-    pwsh.exe -Command "Install-Module AZureAD -Force"
+    Start-Process -Wait "$($location)\pwsh.exe" -ArgumentList "-Command", "Install-Module AZureAD -Force"
     Write-Output "pwsh: Install AZureAD"
-    pwsh.exe -Command "Install-Module Az.Websites -MinimumVersion '2.8' -Force"
+    Start-Process -Wait "$($location)\pwsh.exe" -ArgumentList "-Command", "Install-Module Az.Websites -MinimumVersion '2.8' -Force"
     Write-Output "pwsh: Install Az.Websites"
-    pwsh.exe -Command "Install-Module -Name Mdbc -Force"
+    Start-Process -Wait "$($location)\pwsh.exe" -ArgumentList "-Command", "Install-Module -Name Mdbc -Force"
     Write-Output "pwsh: Install Mdbc"
 
 }
