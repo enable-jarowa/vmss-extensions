@@ -16,7 +16,7 @@ if ($f_featurearray.Contains("sfstandalone")) {
         New-NetFirewallRule -DisplayName "$($ruleName)" `
             -Profile @('Domain', 'Private', 'Public') `
             -Direction Inbound -Action Allow -Protocol TCP `
-            -LocalPort @('8000', '8001', '8003', '8010', '443')
+            -LocalPort @('8000', '8001', '8002', '8003', '8010', '443')
     } else {
         Write-Host "$($ruleName) - Rule already exists"
     }
