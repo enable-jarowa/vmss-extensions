@@ -8,7 +8,7 @@ if ($null -eq $enableRule) {
     New-NetFirewallRule -DisplayName '_Enable Service Fabric App Ports' `
         -Profile @('Domain', 'Private', 'Public') `
         -Direction Inbound -Action Allow -Protocol TCP `
-        -LocalPort @('8000', '8001', '8003', '8010', '443')
+        -LocalPort @('8000', '8001', '8002', '8003', '8010')
 } else {
     Write-Host "$($ruleName) - Rule already exists"
 }
