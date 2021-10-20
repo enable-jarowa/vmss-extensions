@@ -26,6 +26,8 @@ if ($f_featurearray.Contains("msbuildtools")) {
     Write-Output "Install Az.Websites"
     Install-Module -Name Mdbc -Force
     Write-Output "Install Mdbc"
+    Install-Module -Name Logging -Force
+    Write-Output "Install Logging"
     
     ## still needs fix parameter - because powershell does not have $env path updated
     $location="C:\Program Files\PowerShell\7"
