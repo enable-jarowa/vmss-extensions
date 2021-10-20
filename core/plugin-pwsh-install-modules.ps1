@@ -39,6 +39,8 @@ if ($f_featurearray.Contains("msbuildtools")) {
     Write-Output "pwsh: Install Az.Websites"
     Start-Process -Wait "$($location)\pwsh.exe" -ArgumentList "-Command", "Install-Module -Name Mdbc -Force"
     Write-Output "pwsh: Install Mdbc"
+    Start-Process -Wait "$($location)\pwsh.exe" -ArgumentList "-Command", "Install-Module -Name Logging -Force"
+    Write-Output "pwsh: Install Logging"
 
 }
 
