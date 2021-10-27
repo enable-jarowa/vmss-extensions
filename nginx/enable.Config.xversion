@@ -1,0 +1,2 @@
+set $XVersionConfig "${XVersionConfig}";
+set $XVersionUpdatedAtConfig "${XVersionUpdatedAt}";
