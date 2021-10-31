@@ -1,2 +1,2 @@
 set $XVersionFE "${XVersionFE}";
-set $XVersionUpdatedFEAt "${XVersionUpdatedAt}";
+set $XVersionUpdatedFEAt "${XVersionUpdatedFEAt}";
