@@ -1,4 +1,4 @@
-  Write-Output "------------------------------------------"
+Write-Output "------------------------------------------"
 Write-Output "Custom script: plugin-sf-standalone.ps1"
 Write-Output "------------------------------------------"
 $f_url = $args[0]
@@ -133,18 +133,22 @@ if ($f_featurearray.Contains("sfstandalone")) {
     $versions = @{
        "v7.2.413.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/7.2.413.9590/Microsoft.Azure.ServiceFabric.WindowsServer.7.2.413.9590.zip";
        "v8.0.521.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/8.0.521.9590/Microsoft.Azure.ServiceFabric.WindowsServer.8.0.521.9590.zip";
+       "v8.1.321.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/8.1.321.9590/Microsoft.Azure.ServiceFabric.WindowsServer.8.1.321.9590.zip"
     }
     #$version = "7.2.413.9590"
-    $version = "8.0.521.9590"
+    #$version = "8.0.521.9590"
+    $version = "8.1.321.9590"
     $versionKey = "v$($version)"
     $versionFolder = "Microsoft.Azure.ServiceFabric.WindowsServer.$($version)"
     $msi = "$($versionFolder).zip"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
     if (!(Test-Path $fileDownloaded -PathType leaf)) {
-        Invoke-WebRequest `
-            -Uri "$($versions[$versionKey])" `
-            -OutFile $fileDownloaded -UseBasicParsing
+        (New-Object System.Net.WebClient).DownloadFile("$($versions[$versionKey])", $fileDownloaded)
+        #Invoke-WebRequest `
+        #    -Uri "$($versions[$versionKey])" `
+        #    -OutFile $fileDownloaded -UseBasicParsing
     }
+
 
     $logpath="$($env:TEMP)\$($versionFolder)"
     if (!(Test-Path $logpath)) {
@@ -154,13 +158,54 @@ if ($f_featurearray.Contains("sfstandalone")) {
          Write-Output "SF standalone cluster already installed $($versionFolder)"
     }
 
+
+    $ThisScriptPath = "$($env:TEMP)\$($versionFolder)"
+    $DeployerBinPath = Join-Path $ThisScriptPath -ChildPath "DeploymentComponents"
+    $DeploymentRuntimePackagesPath = Join-Path $ThisScriptPath -ChildPath "DeploymentRuntimePackages"
+    mkdir -p $DeploymentRuntimePackagesPath -ea ignore
+    
+    $SystemFabricModulePath = Join-Path $DeployerBinPath -ChildPath "System.Fabric.dll"
+    $ServiceFabricPowershellModulePath = Join-Path $DeployerBinPath -ChildPath "ServiceFabric.psd1"
+
+    #Add FabricCodePath Environment Path
+    #$env:path = "$($DeployerBinPath);" + $env:path
+
+    #Import Service Fabric Powershell Module
+    Import-Module $ServiceFabricPowershellModulePath -Force
+
+
+    $sf=Get-ServiceFabricRuntimeUpgradeVersion -BaseVersion $version
+    $sfmatch = $sf  | Where-Object { $_.Version.StartsWith($version)}
+    $sfVersion = $sfmatch.Version
+ 
+    $location = $sfmatch.TargetPackageLocation
+    $outfile = $location.Split("/")[-1]
+    Write-host $location
+    Write-Host $sfVersion
+
+    $msi = "$($outfile)"
+    $fileDownloaded = "$($DeploymentRuntimePackagesPath)\$($msi)"
+    if (!(Test-Path $fileDownloaded -PathType leaf)) {
+
+        (New-Object System.Net.WebClient).DownloadFile($location, $fileDownloaded)
+        Write-Host "Runtime package has been successfully downloaded to $($msi)."
+
+        #Invoke-WebRequest `
+        #    -Uri "$($location)" `
+        #    -OutFile $fileDownloaded -UseBasicParsing
+    }
+    $FabricRuntimePackagePath=$fileDownloaded
+
     # for demo
     #. $env:TEMP\Microsoft.Azure.ServiceFabric.WindowsServer.7.2.413.9590\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($env:TEMP)\ClusterConfig.X509.OneNode.json" -AcceptEULA 
 
     $newManifestFile = PrepareClusterManifest -manifestFileTemplate "$($env:TEMP)\ClusterConfig.X509.OneNode-template.json"
     Write-Output "Result manifest: $($newManifestFile)"
 
-    . $env:TEMP\$versionFolder\CreateServiceFabricCluster.ps1 -ClusterConfigFilePath "$($newManifestFile)" -AcceptEULA *>> "$($env:TEMP)\plugin-sf-standalone-CreateServiceFabricCluster.log"
+    . $env:TEMP\$versionFolder\CreateServiceFabricCluster.ps1 `
+           -ClusterConfigFilePath "$($newManifestFile)" `
+           -FabricRuntimePackagePath $FabricRuntimePackagePath `
+           -AcceptEULA *>> "$($env:TEMP)\plugin-sf-standalone-CreateServiceFabricCluster.log"
 
 } else {
     Write-Output "SF standalone cluster is not installed"
@@ -170,5 +215,6 @@ Write-Output "------------------------------------------"
 Write-Output "done"
 Write-Output "------------------------------------------"
 $True
+ 
  
  
