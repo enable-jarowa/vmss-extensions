@@ -23,11 +23,11 @@ RestartSec=2
 # Always-on
 Restart=always
 
-PrivateTmp=true
-PrivateDevices=true
+PrivateTmp=false
+PrivateDevices=false
+NoNewPrivileges=true
 
 ProtectSystem=full
-
-ReadOnlyDirectories=/
+#ReadOnlyDirectories=/
 #ReadWriteDirectories=/var/log/clammit
 ReadWriteDirectories=/var/run/clammit
