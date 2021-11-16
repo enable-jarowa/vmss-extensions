@@ -23,11 +23,12 @@ RestartSec=2
 # Always-on
 Restart=always
 
-PrivateTmp=false
-PrivateDevices=false
-NoNewPrivileges=true
+# TODO following below trigger a 226 NAMESPACE error, to be analyzed later
+#PrivateTmp=false
+#PrivateDevices=false
+#NoNewPrivileges=true
 
-ProtectSystem=full
+#ProtectSystem=full
 #ReadOnlyDirectories=/
 #ReadWriteDirectories=/var/log/clammit
-ReadWriteDirectories=/var/run/clammit
+#ReadWriteDirectories=/var/run/clammit
