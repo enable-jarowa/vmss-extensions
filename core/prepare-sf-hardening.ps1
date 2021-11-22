@@ -12,7 +12,7 @@ $f_features="$($args[5])"
 Write-Output "Features=$($f_features)"
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
-if ($f_featurearray.Contains("hardening")) {
+if ($True -or ($f_featurearray.Contains("hardening"))) {
     
 }
 
