@@ -24,7 +24,8 @@ if ($True -or ($f_featurearray.Contains("hardening"))) {
     # Remediation: Disable autoplay from any disk type by setting the value NoDriveTypeAutoRun to 255 under
     #   this registry key:
     #   HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
-    # TODO
+    $path ='HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\Explorer'
+    Set-ItemProperty $path -Name NoDriveTypeAutorun -Type DWord -Value 0xFF
 
     # Description:
     #      SMB Signing Disabled or SMB Signing Not Required
@@ -51,7 +52,7 @@ if ($True -or ($f_featurearray.Contains("hardening"))) {
     # For UNIX systems:
     #     To require samba clients running "smbclient" to use packet signing, add the following to the "[global]" section of the Samba configuration file:
     #     client signing = mandatory
-    # TODO
+    Set-SmbServerConfiguration -RequireSecuritySignature $True -EnableSecuritySignature $True -EncryptData $True -Confirm:$false
 
     # Description:
     #   Enabled Cached Logon Credential
@@ -75,7 +76,10 @@ if ($True -or ($f_featurearray.Contains("hardening"))) {
     #     We check for "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\LSA RestrictAnonymous" as well as "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters RestrictNullSessAccess" = 0 as Microsoft has stated that "Remote access to the registry may still be possible after you follow the steps in this article if the RestrictNullSessAccess registry value has been created and is set to 0. This value allows remote access to the registry by using a null session. The value overrides other explicit restrictive settings."
     # Remediation:
     #     To disable or restrict null session, please refer to Microsoft Knowledge Base Article For restricting-information-available-to-anonymous-logon-users or Microsoft TechNet : RestrictNullSessAccess for further details.
-    # TODO
+    Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
+    New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name RestrictAnonymous -Value 1 -PropertyType DWORD -Force
+    New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name RestrictAnonymousSAM -Value 1 -PropertyType DWORD -Force
+    New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Name EveryoneIncludesAnonymous -Value 0 -PropertyType DWORD -Force
 
 }
 
