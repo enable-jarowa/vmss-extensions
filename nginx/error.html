@@ -34,13 +34,14 @@
         var country = "Switzerland"; 
         var languages = [ "Deutsch", "Français", "Italiano" ]; 
         var supportLinks = { "Deutsch": "https://www.jarowa.ch/de/support-center/bug/", "Français": "https://www.jarowa.ch/fr/support-center/bug/", "Italiano": "https://www.jarowa.ch/it/support-center/bug/" };
-        if(window.location.href.endsWith(".de"))
+        var locationHost = window.location.host.toLowerCase();
+        if(locationHost.endsWith(".de"))
         {
             var country = "Germany"; 
             var languages = [ "Deutsch" ]; 
             var supportLinks = { "Deutsch": "https://www.jarowa.de/deutsch/support-center/fehler-melden/" };
         }
-        if(window.location.href.endsWith(".co.uk"))
+        if(locationHost.endsWith(".co.uk"))
         {
             var country = "United Kingdom"; 
             var languages = [ "English" ]; 
