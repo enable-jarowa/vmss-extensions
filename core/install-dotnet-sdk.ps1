@@ -36,7 +36,7 @@ if ($f_featurearray.Contains("dotnetsdk3.1") -or $f_featurearray.Contains("dotne
 
     $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
     [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
-    $channel="3.1"
+    $channel="6.0"
 
     $location="$($env:programfiles)\dotnet"
     . $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
