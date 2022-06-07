@@ -23,11 +23,15 @@ if ($f_featurearray.Contains("msbuildtools")) {
     $installedTools=0
 
     if ($installedTools -eq 0) { 
+        ## 2017: https://aka.ms/vs/15/release/vs_buildtools.exe
+        ## 2019: https://aka.ms/vs/16/release/vs_buildtools.exe
+        ## 2022: https://aka.ms/vs/17/release/vs_buildtools.exe
         $msi = "vs_BuildTools.exe"
+        $msiurl = "https://aka.ms/vs/17/release/$($msi)"
         $fileDownloaded = "$($env:TEMP)\$($msi)"
         if (!(Test-Path $fileDownloaded -PathType leaf)) {
             Invoke-WebRequest `
-                -Uri "https://aka.ms/vs/16/release/$($msi)" `
+                -Uri "$($msiurl)" `
                 -OutFile $fileDownloaded
         }
 
