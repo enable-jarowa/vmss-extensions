@@ -50,11 +50,13 @@ if ($f_featurearray.Contains("sfsdk")) {
 
     }
 
+    # sleep just to be sure that the temp folder is really set
+    Start-Sleep -Seconds 10
     Write-Output "Installing /Products:MicrosoftAzure-ServiceFabric-CoreSDK"
     Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"MicrosoftAzure-ServiceFabric-CoreSDK"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
 
-    Write-Output "Reset LocalApp Folder to ORIG"
-    Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-orig.reg"
+    ## Write-Output "Reset LocalApp Folder to ORIG"
+    ## Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-orig.reg"
 } else {
     Write-Output "SFSDK not installed"
 }
