@@ -1,0 +1,4 @@
+{
+    "code": "BadRequestError400",
+    "message": "The HTTP request failed due to bad request"
+}
