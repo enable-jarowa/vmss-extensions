@@ -10,4 +10,3 @@
 . $PSScriptRoot\install-sfsdk.ps1 @args *>> "$($env:TEMP)\install-sfsdk.log"
 . $PSScriptRoot\install-dotnet-sdk.ps1 @args *>> "$($env:TEMP)\install-dotnet-sdk.log"
 . $PSScriptRoot\install-msbuild-tools.ps1 @args *>> "$($env:TEMP)\install-msbuild-tools.log"
-. $PSScriptRoot\install-verdaccio.ps1 @args *>> "$($env:TEMP)\install-verdaccio.log"

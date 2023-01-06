@@ -11,22 +11,9 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("sfsdk")) {
     Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force -Scope CurrentUser 
-    $logpath="C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\Web Platform Installer\logs\install\"
-    if (!(Test-Path $logpath)) {
-        mkdir "C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\Web Platform Installer\logs\install\"
-    }
     if (Get-LocalUser -Name master -ErrorAction Ignore) {
         Get-LocalUser -Name master | Set-LocalUser -PasswordNeverExpires $True
     }
-    $msi = "WebPlatformInstaller_x64_en-US.msi"
-    $fileDownloaded = "$($env:TEMP)\$($msi)"
-    if (!(Test-Path $fileDownloaded -PathType leaf)) {
-        Invoke-WebRequest `
-            -Uri "https://download.microsoft.com/download/8/4/9/849DBCF2-DFD9-49F5-9A19-9AEE5B29341A/WebPlatformInstaller_x64_en-US.msi" `
-            -OutFile $fileDownloaded -UseBasicParsing
-    }
-    Start-Process "msiexec" -ArgumentList '/i', "$($fileDownloaded)", '/passive', '/quiet', '/norestart', '/qn' -NoNewWindow -Wait; 
-
 
     # https://stackoverflow.com/questions/29723429/chef-webpi-cookbook-fails-install-in-azure
     # webpicmd installer has some issues with writing log files to app settings
@@ -35,9 +22,7 @@ if ($f_featurearray.Contains("sfsdk")) {
     Write-Output "Reset LocalApp Folder to TEMP"
     Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-temp.reg"
 
-
     $testToRemove = "C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code\CleanFabric.ps1"
-    $fileDownloaded = "$($env:TEMP)\$($msi)"
     if (Test-Path $testToRemove -PathType leaf) {
         $sdkFound = Get-WmiObject -class win32_product -Filter "Name like '%Service Fabric%SDK%'"
         if ($null -ne $sdkFound) {
@@ -47,13 +32,38 @@ if ($f_featurearray.Contains("sfsdk")) {
             Start-Sleep 30
         }
         powershell.exe -File "C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code\CleanFabric.ps1"
-
     }
 
     # sleep just to be sure that the temp folder is really set
     Start-Sleep -Seconds 10
-    Write-Output "Installing /Products:MicrosoftAzure-ServiceFabric-CoreSDK"
-    Start-Process "$($env:programfiles)\microsoft\web platform installer\WebPICMD.exe" -ArgumentList '/Install', '/Products:"MicrosoftAzure-ServiceFabric-CoreSDK"', '/AcceptEULA', "/Log:$($env:TEMP)\WebPICMD-install-service-fabric-sdk.log" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\WebPICMD.log"  -RedirectStandardError "$($env:TEMP)\WebPICMD.error.log" 
+
+    Write-Output "Installing /Products:$($msiname)"
+
+    $msiname = "MicrosoftServiceFabric.9.1.1436.9590"
+    $msi = "$($msiname).exe"
+    $fileDownloaded = "$($env:TEMP)\$($msi)"
+    if (!(Test-Path $fileDownloaded -PathType leaf)) {
+        Invoke-WebRequest `
+            -Uri "https://download.microsoft.com/download/b/8/a/b8a2fb98-0ec1-41e5-be98-9d8b5abf7856/$($msi)" `
+            -OutFile $fileDownloaded -UseBasicParsing
+    }
+    Start-Sleep -Seconds 10
+    Start-Process "$($env:TEMP)\$($msi)" -ArgumentList '/AcceptEULA', "/force", "/quiet" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\$($msiname).log"  -RedirectStandardError "$($env:TEMP)\$($msiname).error.log" 
+
+    $msiname = "MicrosoftServiceFabricSDK.6.1.1436"
+
+    Write-Output "Installing /Products:$($msiname)"
+    $msi = "$($msiname).msi"
+    $fileDownloaded = "$($env:TEMP)\$($msi)"
+    if (!(Test-Path $fileDownloaded -PathType leaf)) {
+        Invoke-WebRequest `
+            -Uri "https://download.microsoft.com/download/b/8/a/b8a2fb98-0ec1-41e5-be98-9d8b5abf7856/$($msi)" `
+            -OutFile $fileDownloaded -UseBasicParsing
+    }
+    Start-Sleep -Seconds 10
+    & "$($env:TEMP)\$($msi)" /qn /norestart /quiet /log "$($env:TEMP)\$($msiname)-install.log"
+
+    Start-Sleep -Seconds 20 
 
     ## Write-Output "Reset LocalApp Folder to ORIG"
     ## Start-Process "$($env:windir)\regedit.exe" -ArgumentList "/s", "$($env:TEMP)\plugin-sf-SDK-orig.reg"
