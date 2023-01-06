@@ -36,10 +36,8 @@ if ($f_featurearray.Contains("sfsdk")) {
 
     # sleep just to be sure that the temp folder is really set
     Start-Sleep -Seconds 10
-
-    Write-Output "Installing /Products:$($msiname)"
-
     $msiname = "MicrosoftServiceFabric.9.1.1436.9590"
+    Write-Output "Installing /Products:$($msiname)"
     $msi = "$($msiname).exe"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
     if (!(Test-Path $fileDownloaded -PathType leaf)) {
@@ -51,7 +49,6 @@ if ($f_featurearray.Contains("sfsdk")) {
     Start-Process "$($env:TEMP)\$($msi)" -ArgumentList '/AcceptEULA', "/force", "/quiet" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\$($msiname).log"  -RedirectStandardError "$($env:TEMP)\$($msiname).error.log" 
 
     $msiname = "MicrosoftServiceFabricSDK.6.1.1436"
-
     Write-Output "Installing /Products:$($msiname)"
     $msi = "$($msiname).msi"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
