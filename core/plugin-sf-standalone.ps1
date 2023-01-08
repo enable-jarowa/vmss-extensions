@@ -131,17 +131,20 @@ if ($f_featurearray.Contains("sfstandalone")) {
     # installation docs: https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-creation-for-windows-server
     # all releases SF     - https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-versions
     # List of all SF cabs - https://docs.microsoft.com/en-us/samples/azure-samples/service-fabric-dotnet-standalone-cluster-configuration/service-fabric-standalone-cluster-configuration/
+    # List of SF + SDK    - https://learn.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started#install-the-sdk-and-tools
     $versions = @{
         "v7.2.413.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/7.2.413.9590/Microsoft.Azure.ServiceFabric.WindowsServer.7.2.413.9590.zip";
         "v8.0.521.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/8.0.521.9590/Microsoft.Azure.ServiceFabric.WindowsServer.8.0.521.9590.zip";
         "v8.1.321.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/8.1.321.9590/Microsoft.Azure.ServiceFabric.WindowsServer.8.1.321.9590.zip";
         "v9.0.1017.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/9.0.1017.9590/Microsoft.Azure.ServiceFabric.WindowsServer.9.0.1017.9590.zip"
         "v9.0.1048.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/9.0.1048.9590/Microsoft.Azure.ServiceFabric.WindowsServer.9.0.1048.9590.zip"
+        "v9.1.1436.9590" = "https://download.microsoft.com/download/8/3/6/836E3E99-A300-4714-8278-96BC3E8B5528/9.0.1048.9590/Microsoft.Azure.ServiceFabric.WindowsServer.9.1.1436.9590.zip"
     }
     #$version = "7.2.413.9590"
     #$version = "8.0.521.9590"
     #$version = "9.0.1017.9590"
-    $version = "9.0.1048.9590"
+    #$version = "9.0.1048.9590"
+    $version = "9.1.1436.9590"
     $versionKey = "v$($version)"
     $versionFolder = "Microsoft.Azure.ServiceFabric.WindowsServer.$($version)"
     $msi = "$($versionFolder).zip"

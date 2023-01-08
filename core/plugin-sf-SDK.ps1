@@ -15,6 +15,17 @@ if ($f_featurearray.Contains("sfsdk")) {
         Get-LocalUser -Name master | Set-LocalUser -PasswordNeverExpires $True
     }
 
+    # installation docs: https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-creation-for-windows-server
+    # all releases SF     - https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-versions
+    # List of all SF cabs - https://docs.microsoft.com/en-us/samples/azure-samples/service-fabric-dotnet-standalone-cluster-configuration/service-fabric-standalone-cluster-configuration/
+    # List of SF + SDK    - https://learn.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started#install-the-sdk-and-tools
+    #$version = "7.2.413.9590"
+    #$version = "8.0.521.9590"
+    #$version = "9.0.1017.9590"
+    #$version = "9.0.1048.9590"
+    $version = "9.1.1436.9590"
+    $sdkversion = "6.1.1436"
+
     # https://stackoverflow.com/questions/29723429/chef-webpi-cookbook-fails-install-in-azure
     # webpicmd installer has some issues with writing log files to app settings
     # only hack described above in link
@@ -36,7 +47,7 @@ if ($f_featurearray.Contains("sfsdk")) {
 
     # sleep just to be sure that the temp folder is really set
     Start-Sleep -Seconds 10
-    $msiname = "MicrosoftServiceFabric.9.1.1436.9590"
+    $msiname = "MicrosoftServiceFabric.$($version)"
     Write-Output "Installing /Products:$($msiname)"
     $msi = "$($msiname).exe"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
@@ -48,7 +59,7 @@ if ($f_featurearray.Contains("sfsdk")) {
     Start-Sleep -Seconds 10
     Start-Process "$($env:TEMP)\$($msi)" -ArgumentList '/AcceptEULA', "/force", "/quiet" -NoNewWindow -Wait -RedirectStandardOutput "$($env:TEMP)\$($msiname).log"  -RedirectStandardError "$($env:TEMP)\$($msiname).error.log" 
 
-    $msiname = "MicrosoftServiceFabricSDK.6.1.1436"
+    $msiname = "MicrosoftServiceFabricSDK.$($sdkversion)"
     Write-Output "Installing /Products:$($msiname)"
     $msi = "$($msiname).msi"
     $fileDownloaded = "$($env:TEMP)\$($msi)"
