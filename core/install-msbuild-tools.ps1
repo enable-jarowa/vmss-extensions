@@ -41,13 +41,13 @@ if ($f_featurearray.Contains("msbuildtools")) {
         Write-Output "Start vs_BuildTools.exe to save installations offline"
 
         ## VS 2019 works with Microsoft.VisualStudio.Workload.NetCoreBuildTools
-        ## Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList "--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--add", "Microsoft.VisualStudio.Workload.WebBuildTools", "--add", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--quiet", "--wait", "--norestart"
+        ## Start-Process -NoNewWindow -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList "--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Workload.NetCoreBuildTools", "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--add", "Microsoft.VisualStudio.Workload.WebBuildTools", "--add", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--quiet", "--wait", "--norestart"
 
         ## VS 2019 works without Microsoft.VisualStudio.Workload.NetCoreBuildTools
-        Start-Process -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList "--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools",  "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--add", "Microsoft.VisualStudio.Workload.WebBuildTools", "--add", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--quiet", "--wait", "--norestart"
+        Start-Process -NoNewWindow -Wait "$($env:temp)\vs_BuildTools.exe" -ArgumentList "--layout", "$($location)", "--lang", "En-us", "--add", "Microsoft.VisualStudio.Workload.MSBuildTools",  "-add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--add", "Microsoft.VisualStudio.Workload.WebBuildTools", "--add", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--quiet", "--wait", "--norestart"
 
         Write-Output "Start vs_setup.exe to install ms build tools and friends - takes a few minutes"
-        Start-Process -Wait "$($location)\vs_setup.exe" -ArgumentList "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--add", "Microsoft.VisualStudio.Workload.WebBuildTools", "--add", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--addProductLang", "en-US", "--quiet", "--wait", "--noUpdateInstaller"
+        Start-Process -NoNewWindow -Wait "$($location)\vs_setup.exe" -ArgumentList "--add", "Microsoft.VisualStudio.Workload.MSBuildTools", "--add", "Microsoft.VisualStudio.Component.VSSDKBuildTools", "--add", "Microsoft.VisualStudio.Workload.WebBuildTools", "--add", "Microsoft.VisualStudio.Workload.AzureBuildTools", "--includeRecommended", "--addProductLang", "en-US", "--quiet", "--wait", "--noUpdateInstaller"
 
         Write-Output "installation done"
 
