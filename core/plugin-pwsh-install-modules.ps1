@@ -17,17 +17,17 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("msbuildtools")) {
     try {
-        Install-Module AzTable -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module AzTable -Force
         Write-Output "Install AzTable"
-        Install-Module Az.Storage -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Storage -Force
         Write-Output "Install Az.Storage"
-        Install-Module AZureAD -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module AZureAD -Force
         Write-Output "Install AZureAD"
-        Install-Module Az.Websites -MinimumVersion '2.8' -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Websites -MinimumVersion '2.8' -Force
         Write-Output "Install Az.Websites"
-        Install-Module -Name Mdbc -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module -Name Mdbc -Force
         Write-Output "Install Mdbc"
-        Install-Module -Name Logging -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module -Name Logging -Force
         Write-Output "Install Logging"
         
         ## still needs fix parameter - because powershell does not have $env path updated
