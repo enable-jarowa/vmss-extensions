@@ -18,22 +18,26 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 if ($f_featurearray.Contains("msbuildtools")) {
     try {
         ## Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-        ## Install-NuGetClientBinaries
+        ## Install-NuGetClientBinaries -Scope CurrentUser
     
         ## Windows PowerShell 5.1 comes with version 1.0.0.1 of PowerShellGet preinstalled. This version of PowerShellGet has a limited features and must update to the latest version (preinstalled is missing -AcceptLicense)
-        Install-Module PowerShellGet -AllowClobber -Force -Scope CurrentUser
-        Write-Output "Update preinstalled PowerShellGet"
-        powershell.exe -ExecutionPolicy Unrestricted -nologo -Command Install-Module AzTable -AcceptLicense -AllowClobber -Scope CurrentUser -Force
+        ## Install-Module PowerShellGet
+        ## Write-Output "Update preinstalled PowerShellGet"
+        
+        Install-Module -Name Az -AllowClobber -Scope CurrentUser
+        Write-Output "Install Az"
+        
+        Install-Module AzTable -Force
         Write-Output "Install AzTable"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Storage -AcceptLicense -Scope CurrentUser -AllowClobber -Force
+        Install-Module Az.Storage -Force
         Write-Output "Install Az.Storage"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module AZureAD -AcceptLicense -AllowClobber -Force
+        Install-Module AZureAD -Force
         Write-Output "Install AZureAD"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Websites -MinimumVersion '2.8' -AcceptLicense -AllowClobber -Force
+        Install-Module Az.Websites -MinimumVersion '2.8' -Force
         Write-Output "Install Az.Websites"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module -Name Mdbc -AcceptLicense -AllowClobber -Force
+        Install-Module -Name Mdbc -Force
         Write-Output "Install Mdbc"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module -Name Logging -AcceptLicense -AllowClobber -Force
+        Install-Module -Name Logging -Force
         Write-Output "Install Logging"
         
         ## still needs fix parameter - because powershell does not have $env path updated
