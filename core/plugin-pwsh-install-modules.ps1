@@ -17,15 +17,19 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("msbuildtools")) {
     try {
+        
+        Write-Output "Install nuget"
+        Install-PackageProvider nuget -force        
+        Write-Output "Installed nuget"
+
+        Write-Output "Install set-ps"
         Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-        ## Install-NuGetClientBinaries -Scope CurrentUser
+        Write-Output "Installed set-ps"
     
         ## Windows PowerShell 5.1 comes with version 1.0.0.1 of PowerShellGet preinstalled. This version of PowerShellGet has a limited features and must update to the latest version (preinstalled is missing -AcceptLicense)
-        ## Install-Module PowerShellGet
-        ## Write-Output "Update preinstalled PowerShellGet"
         
         Write-Output $PSVersionTable      
-        Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser
+        Install-Module -Name Az -Force -AllowClobber 
         Write-Output "Installed Az"
         
         Install-Module AzTable
