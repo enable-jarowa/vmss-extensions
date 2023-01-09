@@ -17,17 +17,17 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("msbuildtools")) {
     try {
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module AzTable -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module AzTable -AcceptLicense -AllowClobber -Force
         Write-Output "Install AzTable"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Storage -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Storage -AcceptLicense -AllowClobber -Force
         Write-Output "Install Az.Storage"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module AZureAD -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module AZureAD -AcceptLicense -AllowClobber -Force
         Write-Output "Install AZureAD"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Websites -MinimumVersion '2.8' -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Websites -MinimumVersion '2.8' -AcceptLicense -AllowClobber -Force
         Write-Output "Install Az.Websites"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module -Name Mdbc -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module -Name Mdbc -AcceptLicense -AllowClobber -Force
         Write-Output "Install Mdbc"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module -Name Logging -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module -Name Logging -AcceptLicense -AllowClobber -Force
         Write-Output "Install Logging"
         
         ## still needs fix parameter - because powershell does not have $env path updated
