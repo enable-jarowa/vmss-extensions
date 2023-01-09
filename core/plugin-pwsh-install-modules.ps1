@@ -24,6 +24,7 @@ if ($f_featurearray.Contains("msbuildtools")) {
         ## Install-Module PowerShellGet
         ## Write-Output "Update preinstalled PowerShellGet"
         
+        Write-Output $PSVersionTable      
         Install-Module -Name Az -AllowClobber -Scope CurrentUser
         Write-Output "Install Az"
         
