@@ -17,7 +17,7 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("msbuildtools")) {
     try {
-        ## Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+        Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
         ## Install-NuGetClientBinaries -Scope CurrentUser
     
         ## Windows PowerShell 5.1 comes with version 1.0.0.1 of PowerShellGet preinstalled. This version of PowerShellGet has a limited features and must update to the latest version (preinstalled is missing -AcceptLicense)
@@ -25,21 +25,17 @@ if ($f_featurearray.Contains("msbuildtools")) {
         ## Write-Output "Update preinstalled PowerShellGet"
         
         Write-Output $PSVersionTable      
-        Install-Module -Name Az -AllowClobber -Scope CurrentUser
-        Write-Output "Install Az"
+        Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser
+        Write-Output "Installed Az"
         
-        Install-Module AzTable -Force
-        Write-Output "Install AzTable"
-        Install-Module Az.Storage -Force
-        Write-Output "Install Az.Storage"
-        Install-Module AZureAD -Force
-        Write-Output "Install AZureAD"
-        Install-Module Az.Websites -MinimumVersion '2.8' -Force
-        Write-Output "Install Az.Websites"
-        Install-Module -Name Mdbc -Force
-        Write-Output "Install Mdbc"
-        Install-Module -Name Logging -Force
-        Write-Output "Install Logging"
+        Install-Module AzTable
+        Write-Output "Installed AzTable"
+        Install-Module AZureAD 
+        Write-Output "Installed AZureAD"
+        Install-Module -Name Mdbc
+        Write-Output "Installed Mdbc"
+        Install-Module -Name Logging 
+        Write-Output "Installed Logging" 
         
         ## still needs fix parameter - because powershell does not have $env path updated
         $location="C:\Program Files\PowerShell\7"
