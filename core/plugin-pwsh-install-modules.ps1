@@ -17,14 +17,15 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("msbuildtools")) {
     try {
-        Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+        ## Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+        ## Install-NuGetClientBinaries
     
         ## Windows PowerShell 5.1 comes with version 1.0.0.1 of PowerShellGet preinstalled. This version of PowerShellGet has a limited features and must update to the latest version (preinstalled is missing -AcceptLicense)
-        Install-Module PowerShellGet -AllowClobber -Force
+        Install-Module PowerShellGet -AllowClobber -Force -Scope CurrentUser
         Write-Output "Update preinstalled PowerShellGet"
-        powershell.exe -ExecutionPolicy Unrestricted -nologo -Command Install-Module AzTable -AcceptLicense -AllowClobber -Force
+        powershell.exe -ExecutionPolicy Unrestricted -nologo -Command Install-Module AzTable -AcceptLicense -AllowClobber -Scope CurrentUser -Force
         Write-Output "Install AzTable"
-        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Storage -AcceptLicense -AllowClobber -Force
+        powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module Az.Storage -AcceptLicense -Scope CurrentUser -AllowClobber -Force
         Write-Output "Install Az.Storage"
         powershell.exe -ExecutionPolicy Unrestricted -noninteractive -nologo -Command Install-Module AZureAD -AcceptLicense -AllowClobber -Force
         Write-Output "Install AZureAD"
