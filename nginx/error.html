@@ -47,6 +47,12 @@
             var languages = [ "English" ]; 
             var supportLinks = { "English": "https://www.jarowa.co.uk/error-report/" };
         }
+        if(locationHost.endsWith(".it"))
+        {
+            var country = "Italy"; 
+            var languages = [ "Italian" ]; 
+            var supportLinks = { "Italian": "https://www.jarowa.it/it/centro-di-supporto/segnala-errore/" };
+        }
         var elemLinks = document.getElementById("support-links");
         if (languages.length > 1) {
             // elemLinks.appendChild(document.createTextNode(country+" "));
@@ -67,7 +73,12 @@
         }
     </script>
 
-    <div>Copyright © 2022 JAROWA AG</div>
+    <div id="copyright"></div>
+    <script type="text/javascript">
+        var copyright = document.getElementById("copyright");
+        var yyyy = new Date().getFullYear()
+        copyright.innerHTML = "Copyright © "+yyyy+" JAROWA AG"
+    </script>
     </center>
 </body>
 <footer>
