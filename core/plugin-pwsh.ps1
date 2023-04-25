@@ -19,7 +19,7 @@ if ($f_featurearray.Contains("msbuildtools")) {
     $location="C:\Program Files\PowerShell\7"
     if (!(Test-Path $location\pwsh.exe -PathType leaf)) {
 
-        $msiVersion = "7.1.4"
+        $msiVersion = "7.3.4"
         $msi = "PowerShell-$($msiVersion)-win-x64.zip"
         $fileDownloaded = "$($env:TEMP)\$($msi)"
         if (!(Test-Path $fileDownloaded -PathType leaf)) {
