@@ -14,7 +14,8 @@ $filenamesPluginAll = @(
     "ClusterConfig.X509.OneNode-template.json",
     "plugin-sf-standalone.ps1",
     "plugin-pwsh.ps1",
-    "plugin-pwsh-install-modules.ps1"
+    "plugin-pwsh-install-modules.ps1",
+    "plugin-java-sdk.ps1"
 )
 
 for ($pluginsI=0; $pluginsI -lt $filenamesPluginAll.Count; $pluginsI++) {
