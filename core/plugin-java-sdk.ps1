@@ -17,7 +17,7 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
 if ($f_featurearray.Contains("msbuildtools")) {
     $location="C:\Program Files\java"
-    $msiVersion = "20"
+    $msiVersion = "21"
     $msiArchitecture = "x64"
 
     if (!(Test-Path $location\jdk\bin\java.exe -PathType leaf)) {
