@@ -12,45 +12,38 @@ $f_features="$($args[5])"
 Write-Output "Features=$($f_features)"
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
-## just install both versions all the time
-if ($f_featurearray.Contains("dotnetsdk5.0") -or $f_featurearray.Contains("dotnetsdk")) {
-    $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
-    [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
-    $channel="Current"
-    
-    $location="$($env:programfiles)\dotnet"
-    . $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
+## always install both versions all the time
+$TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
+[System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
+$channel="Current"
 
-    $newPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
-    if (!$newPath.Contains("dotnet")) {
-        $newPath += ";$($location)"
-        $newPath = [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
-        Write-Output "added dotnet to path"
-    } else {
-        Write-Output "dotnet is already in path"
-    }
+$location="$($env:programfiles)\dotnet"
+. $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
 
+$newPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+if (!$newPath.Contains("dotnet")) {
+    $newPath += ";$($location)"
+    $newPath = [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
+    Write-Output "added dotnet to path"
+} else {
+    Write-Output "dotnet is already in path"
 }
 
-if ($f_featurearray.Contains("dotnetsdk3.1") -or $f_featurearray.Contains("dotnetsdk") ) {
+$TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
+[System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
+$channel="6.0"
 
-    $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
-    [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
-    $channel="6.0"
+$location="$($env:programfiles)\dotnet"
+. $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
 
-    $location="$($env:programfiles)\dotnet"
-    . $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
-
-    $newPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
-    if (!$newPath.Contains("dotnet")) {
-        $newPath += ";$($location)"
-        $newPath = [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
-        Write-Output "added dotnet to path"
-    } else {
-        Write-Output "dotnet is already in path"
-    }
+$newPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+if (!$newPath.Contains("dotnet")) {
+    $newPath += ";$($location)"
+    $newPath = [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
+    Write-Output "added dotnet to path"
+} else {
+    Write-Output "dotnet is already in path"
 }
-
 
 Write-Output "------------------------------------------"
 Write-Output "done"
