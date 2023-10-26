@@ -15,7 +15,7 @@ $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 ## always install both versions all the time
 $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
 [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
-$channel="Current"
+$channel="7.0"
 
 $location="$($env:programfiles)\dotnet"
 . $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
