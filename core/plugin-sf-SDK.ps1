@@ -23,8 +23,9 @@ if ($f_featurearray.Contains("sfsdk")) {
     #$version = "8.0.521.9590"
     #$version = "9.0.1017.9590"
     #$version = "9.0.1048.9590"
-    $version = "9.1.1436.9590"
-    $sdkversion = "6.1.1436"
+    #$version = "9.1.1436.9590"
+    $version = "10.1.1951.9590"
+    $sdkversion = "7.1.1951"
 
     # https://stackoverflow.com/questions/29723429/chef-webpi-cookbook-fails-install-in-azure
     # webpicmd installer has some issues with writing log files to app settings
