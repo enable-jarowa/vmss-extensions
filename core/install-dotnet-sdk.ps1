@@ -12,7 +12,23 @@ $f_features="$($args[5])"
 Write-Output "Features=$($f_features)"
 $f_featurearray = $f_features.ToLower().Split(",").Trim().Where({ $_ -ne "" });
 
-## always install both versions all the time
+## always install all three versions all the time
+$TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
+[System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
+$channel="8.0"
+
+$location="$($env:programfiles)\dotnet"
+. $PSScriptRoot\dotnet-install.ps1 -Channel "$($channel)" -InstallDir "$($location)"
+
+$newPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+if (!$newPath.Contains("dotnet")) {
+    $newPath += ";$($location)"
+    $newPath = [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
+    Write-Output "added dotnet to path"
+} else {
+    Write-Output "dotnet is already in path"
+}
+
 $TLS12Protocol = [System.Net.SecurityProtocolType] 'Ssl3 , Tls12'
 [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
 $channel="7.0"
